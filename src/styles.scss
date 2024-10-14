@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'PlusJakartaSans-Regular';
+  src: url('/assets/fonts/PlusJakartaSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'PlusJakartaSans-Bold';
+  src: url('/assets/fonts/PlusJakartaSans-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 *,
 *::before,
 *::after {
@@ -14,6 +29,7 @@ ol {
 html,
 body {
   height: 100%;
+  font-family: 'PlusJakartaSans-Regular', sans-serif;
 }
 
 p,
