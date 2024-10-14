@@ -1,0 +1,14 @@
+aside {
+  border-right: 2px solid #E4EBFA;
+  width: 300px;
+  height: 100%;
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navigation {
+  flex-grow: 1;
+}
