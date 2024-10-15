@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 :host {
   height: 100%;
 
@@ -6,6 +8,6 @@
   align-items: center;
 }
 
-p {
-  font-family: 'PlusJakartaSans-Bold';
+h2 {
+  color: $medium-grey;
 }

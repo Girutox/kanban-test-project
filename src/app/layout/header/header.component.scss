@@ -1,5 +1,7 @@
+@import '../../../styles/variables';
+
 header {
-  border-bottom: 2px solid #E4EBFA;
+  border-bottom: 2px solid $lines-light;
 
   display: flex;
   justify-content: space-between;
