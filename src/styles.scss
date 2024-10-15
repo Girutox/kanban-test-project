@@ -74,6 +74,36 @@ svg {
   max-width: 100%;
 }
 
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  line-height: normal;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus {
+  outline: none;
+}
+
 /*********************/
 
 h1 {

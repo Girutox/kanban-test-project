@@ -1,0 +1,9 @@
+@import '../../../../styles/variables';
+
+:host {
+  flex-grow: 1;
+
+  h4 {
+    margin-bottom: 10px;
+  }
+}

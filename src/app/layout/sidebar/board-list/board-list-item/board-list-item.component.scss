@@ -1,0 +1,23 @@
+@import '../../../../../styles/variables';
+
+li {
+  display: flex;
+  gap: 10px;
+
+  padding: 10px 0;
+
+  @include heading-m;
+  color: $medium-grey;
+}
+
+li:hover:not(.create-mode-item) {
+  background-color: $main-purple-hover;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  color: $white;
+}
+
+.create-mode-item {
+  color: $main-purple;
+  cursor: pointer;
+}

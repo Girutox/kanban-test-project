@@ -11,15 +11,16 @@ aside {
   gap: 10px;
 }
 
-.navigation {
-  flex-grow: 1;
+.logo {
+  padding-bottom: 30px;
+}
 
-  li {
+.utils {
+  .hide-sidebar-button {
     @include heading-m;
     color: $medium-grey;
-  }
 
-  .create-new-board-item {
-    color: $main-purple;
+    display: flex;
+    gap: 10px;
   }
 }
