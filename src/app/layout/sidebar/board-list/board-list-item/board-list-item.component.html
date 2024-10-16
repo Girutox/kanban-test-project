@@ -1,4 +1,6 @@
 <li [ngClass]="{'create-mode-item': createMode()}">
   <!-- TO DO: Fix SVG color, should align with text color   -->
-  <img src="assets/icon-board.svg" alt="" /> <span>{{boardName()}}</span>
+  <div class="item-content">
+    <img src="assets/icon-board.svg" alt="" /> <span>{{boardName()}}</span>
+  </div>
 </li>
