@@ -10,7 +10,7 @@ import { BoardListComponent } from './board-list/board-list.component';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
   animations: [
-    trigger('tooltip', [
+    trigger('fadeInOut', [
       state('void', style({ opacity: 0, width: 0 })),
       state('*', style({ opacity: 1 })),
       transition(':enter', [
@@ -23,7 +23,7 @@ import { BoardListComponent } from './board-list/board-list.component';
   ]
 })
 export class SidebarComponent {
-  @HostBinding('@tooltip') tooltipAnimation = true;
+  @HostBinding('@fadeInOut') fadeInOutAnimation = true;
   
   hideSidebar = output<boolean>();
 

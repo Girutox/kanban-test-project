@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, effect } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
+import { BoardService } from '../../board.service';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +10,8 @@ import { CustomButtonComponent } from "../../UI/custom-button/custom-button.comp
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  boardService = inject(BoardService);
+  activeBoardName = this.boardService.activeBoardName;
 
+  constructor() { }
 }

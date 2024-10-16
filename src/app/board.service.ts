@@ -156,9 +156,15 @@ export class BoardService {
   ]);
   allBoards = this.boards.asReadonly();
 
+  activeBoardName = signal<string>('');
+
   constructor() { }
 
   getBoardColumns(name: string) {
     return [...this.boards().filter(a => a.name == name)[0].columns];
+  }
+
+  setActiveBoardName(boardName: string) {
+    this.activeBoardName.set(boardName);    
   }
 }
