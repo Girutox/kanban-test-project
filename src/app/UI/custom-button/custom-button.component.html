@@ -1,0 +1,12 @@
+<button [ngClass]="{
+  'primary-mode': buttonType() == 'primary',
+  'secondary-mode': buttonType() == 'secondary',
+  'destructive-mode': buttonType() == 'destructive',
+
+  'large-size': buttonSize() == 'large',
+  'small-size': buttonSize() == 'small',
+
+  'disabled': buttonDisabled()
+  }">
+  <ng-content></ng-content>
+</button>

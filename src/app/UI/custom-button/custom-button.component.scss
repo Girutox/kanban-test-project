@@ -1,0 +1,46 @@
+@import '../../../styles/variables';
+
+button {
+  border-radius: 30px;
+  padding: 15px 20px;
+}
+
+.large-size {
+  @include heading-m;
+}
+
+.small-size {
+  @include body-m;
+}
+
+.primary-mode {
+  background-color: $main-purple;
+  color: $white;
+
+  &:hover {
+    background-color: $main-purple-hover;
+  }
+}
+
+.secondary-mode {
+  background-color: rgba($main-purple, 0.1);
+  color: $main-purple;
+
+  &:hover {
+    background-color: rgba($main-purple, 0.25);
+  }
+}
+
+.destructive-mode {
+  background-color: $red;
+  color: $white;
+
+  &:hover {
+    background-color: $red-hover;
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
