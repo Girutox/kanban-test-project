@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+:host {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  color: $medium-grey;
+}
+
+.empty-board-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

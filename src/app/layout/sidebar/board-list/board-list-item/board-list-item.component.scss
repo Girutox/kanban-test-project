@@ -10,6 +10,13 @@ li {
     display: flex;
     gap: 10px;
   }
+
+  &.active:not(.create-mode-item) {
+    background-color: $main-purple;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: $white;
+  }
 }
 
 li:hover:not(.create-mode-item) {

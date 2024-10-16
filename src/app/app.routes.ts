@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: 'board',
     children: [
       {
-        path: ':id',
+        path: ':name',
         component: BoardComponent
       }
     ]

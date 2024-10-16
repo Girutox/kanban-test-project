@@ -1,6 +1,15 @@
-<li [ngClass]="{'create-mode-item': createMode()}">
-  <!-- TO DO: Fix SVG color, should align with text color   -->
-  <div class="item-content">
-    <img src="assets/icon-board.svg" alt="" /> <span>{{boardName()}}</span>
-  </div>
-</li>
+@if (!createMode()) {
+  <li [routerLink]="['/board', boardName()]" routerLinkActive="active">
+    <!-- TO DO: Fix SVG color, should align with text color -->
+    <div class="item-content">
+      <img src="assets/icon-board.svg" alt="" /> <span>{{boardName()}}</span>
+    </div>
+  </li>
+} @else {
+  <li class="create-mode-item">
+    <!-- TO DO: Fix SVG color, should align with text color -->
+    <div class="item-content">
+      <img src="assets/icon-board.svg" alt="" /> <span>{{boardName()}}</span>
+    </div>
+  </li>
+}
