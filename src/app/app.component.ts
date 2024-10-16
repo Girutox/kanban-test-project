@@ -16,6 +16,7 @@ export class AppComponent {
 
   onHideSidebar() {
     this.hideSidebar = true;
+    
   }
 
   onShowSidebar() {
