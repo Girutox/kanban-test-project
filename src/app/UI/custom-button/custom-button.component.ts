@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-custom-button',
@@ -9,7 +9,16 @@ import { Component, input } from '@angular/core';
   styleUrl: './custom-button.component.scss'
 })
 export class CustomButtonComponent {
-  buttonType = input.required<'primary' | 'secondary' | 'destructive'>();
-  buttonSize = input<'large' | 'small'>();
-  buttonDisabled = input<boolean>(false);
+  action = input<'show-sidebar'>();
+  type = input.required<'primary' | 'secondary' | 'destructive'>();
+  size = input<'large' | 'small'>();
+  disabled = input(false);
+
+  showSidebar = output<boolean>();
+
+  onClick() {
+    if (this.action() == 'show-sidebar') {
+      this.showSidebar.emit(true);
+    }
+  }
 }

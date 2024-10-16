@@ -19,7 +19,7 @@ li {
   }
 }
 
-li:hover:not(.create-mode-item) {
+li:hover:not(.create-mode-item, .active) {
   background-color: rgba($main-purple, 0.1);
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;

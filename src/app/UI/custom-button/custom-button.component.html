@@ -1,12 +1,14 @@
-<button [ngClass]="{
-  'primary-mode': buttonType() == 'primary',
-  'secondary-mode': buttonType() == 'secondary',
-  'destructive-mode': buttonType() == 'destructive',
+<button class="custom-button" [ngClass]="{
+  'primary-mode': type() == 'primary',
+  'secondary-mode': type() == 'secondary',
+  'destructive-mode': type() == 'destructive',
 
-  'large-size': buttonSize() == 'large',
-  'small-size': buttonSize() == 'small',
+  'large-size': size() == 'large',
+  'small-size': size() == 'small',
 
-  'disabled': buttonDisabled()
-  }">
+  'disabled': disabled()
+  }"
+  
+  (click)="onClick()">
   <ng-content></ng-content>
 </button>

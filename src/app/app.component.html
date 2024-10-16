@@ -1,4 +1,8 @@
-<app-sidebar />
+@if (!hideSidebar) {
+<app-sidebar (hideSidebar)="onHideSidebar()" />
+} @else {
+<app-show-sidebar (showSidebar)="onShowSidebar()" />
+}
 <section class="main-content">
   <app-header />
   <main>

@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-button {
+.custom-button {
   border-radius: 30px;
   padding: 15px 20px;
 }
@@ -43,4 +43,11 @@ button {
 .disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+:host(.show-sidebar-button) .custom-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  padding-left: 10px;
 }
