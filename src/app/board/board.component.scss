@@ -1,14 +1,32 @@
 @import '../../styles/variables';
 
 :host {
-  height: 100%;
+  flex-grow: 1;
+  justify-content: center;
+
+  padding: 20px;
 
   display: flex;
-  justify-content: start;
-  align-items: start;
+  flex-direction: column;
 
-  padding: 30px;
-  text-align: center;
+  background-color: $light-grey;
+}
+
+:host(.start-aligned) {
+  justify-content: stretch;
+  align-self: stretch;
+}
+
+.full-container {
+  flex-grow: 1;
+
+  display: flex;
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 }
 
 h2 {
@@ -25,4 +43,6 @@ h2 {
 .board-content {
   display: flex;
   gap: 20px;
+
+  height: 100%;
 }
