@@ -1,13 +1,11 @@
 @if (!createMode()) {
   <li (click)="onItemClick()" [ngClass]="{'active': boardName() == boardService.activeBoardName()}">
-    <!-- TO DO: Fix SVG color, should align with text color -->
     <div class="item-content">
       <app-icon-board /><span>{{boardName()}}</span>
     </div>
   </li>
 } @else {
   <li class="create-mode-item">
-    <!-- TO DO: Fix SVG color, should align with text color -->
     <div class="item-content">
       <app-icon-board /><span>{{boardName()}}</span>
     </div>
