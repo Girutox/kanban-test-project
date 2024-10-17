@@ -1,4 +1,4 @@
-import { Component, inject, effect, input } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
 import { BoardService } from '../../board.service';
 
@@ -14,6 +14,7 @@ export class HeaderComponent {
   sidebarHidden = input<boolean>(false);
 
   activeBoardName = this.boardService.activeBoardName;
+  isBoardEmpty = computed(() => this.boardService.getBoardColumns(this.activeBoardName()).length == 0);
 
   constructor() { }
 }

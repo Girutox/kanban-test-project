@@ -6,7 +6,7 @@
   }
   <section class="title-section">
     <h1>{{activeBoardName()}}</h1>
-    <app-custom-button type="primary" buttonSize="large" [disabled]="true">
+    <app-custom-button type="primary" buttonSize="large" [disabled]="isBoardEmpty()">
       + Add New Task
     </app-custom-button>
   </section>
