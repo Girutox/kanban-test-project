@@ -6,5 +6,9 @@
   </app-custom-button>
 </div>
 } @else {
-<h2>WORK IN PROGRESS</h2>
+<div class="board-content">
+  @for (column of boardColumns; track $index) {
+  <app-board-column [status]="column.name" [tasks]="column.tasks" />
+  }
+</div>
 }

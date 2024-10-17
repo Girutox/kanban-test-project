@@ -1,0 +1,9 @@
+<div class="status-container">
+  <div class="circle"></div>
+  <h4>{{status()}} ({{tasks().length}})</h4>
+</div>
+<div class="columns-container">
+@for (task of tasks(); track $index) {
+  <app-board-task [task]="task" />
+}
+</div>

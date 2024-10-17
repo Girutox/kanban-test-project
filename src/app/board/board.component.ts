@@ -3,11 +3,12 @@ import { BoardService } from '../board.service';
 import { ActivatedRoute } from '@angular/router';
 import { Column } from '../model/board.model';
 import { CustomButtonComponent } from "../UI/custom-button/custom-button.component";
+import { BoardColumnComponent } from "./board-column/board-column.component";
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CustomButtonComponent],
+  imports: [CustomButtonComponent, BoardColumnComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss'
 })
