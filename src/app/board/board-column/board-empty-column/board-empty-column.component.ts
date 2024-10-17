@@ -10,7 +10,7 @@ import { Component, HostBinding, input } from '@angular/core';
 export class BoardEmptyColumnComponent {
   isNewColumn = input<boolean>(true);
 
-  @HostBinding('class.empty-column') get emptyTaskClass() {
+  @HostBinding('class.new-column') get newColumnClass() {
     return this.isNewColumn();
   }
 }
