@@ -1,9 +1,17 @@
 <div class="status-container">
+  @if (status() != null) {
   <div class="circle"></div>
-  <h4>{{status()}} ({{tasks().length}})</h4>
+  }
+  <h4>{{(status() == null ? '&nbsp;' : status() + ' (' + tasks()?.length + ')')}}</h4>
 </div>
 <div class="columns-container">
-@for (task of tasks(); track $index) {
+  @if (tasks()?.length === 0) {
+  <app-board-empty-column [isNewColumn]="false" />
+  } @else if (status() == null) {
+  <app-board-empty-column [isNewColumn]="true" />
+  } @else {
+  @for (task of tasks(); track $index) {
   <app-board-task [task]="task" />
-}
+  }
+  }
 </div>
