@@ -5,7 +5,26 @@
 }
 <section class="title-section">
   <h1>{{activeBoardName()}}</h1>
-  <app-custom-button type="primary" buttonSize="large" [disabled]="isBoardEmpty()">
-    + Add New Task
-  </app-custom-button>
+  <div class="last-section">
+    <app-custom-button type="primary" buttonSize="large" [disabled]="isBoardEmpty()">
+      + Add New Task
+    </app-custom-button>
+    <div class="menu-ellipsis">
+      <div class="pseudo-button" (click)="onToggleFloatingCard()">
+        <app-icon-vertical-ellipsis />
+      </div>
+      @if (showFloatingCard()) {
+      <app-floating-card>
+        <ul class="floating-card-list">
+          <li>
+            <button>Edit Board</button>
+          </li>
+          <li class="delete-option">
+            <button>Delete Board</button>
+          </li>
+        </ul>
+      </app-floating-card>
+      }
+    </div>
+  </div>
 </section>

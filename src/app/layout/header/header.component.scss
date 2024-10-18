@@ -28,3 +28,29 @@
 
   padding: 25px 25px;
 }
+
+.last-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  .menu-ellipsis {
+    position: relative;
+
+    .pseudo-button {
+      cursor: pointer;
+    }
+
+    .floating-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      @include body-l;
+
+      .delete-option {
+        color: $red;
+      }
+    }
+  }
+}
