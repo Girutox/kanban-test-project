@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Task } from '../../../model/board.model';
 
 @Component({
@@ -10,4 +10,7 @@ import { Task } from '../../../model/board.model';
 })
 export class BoardTaskComponent {
   task = input.required<Task>();
+  completedSubtaskCount = computed(() => {
+    return this.task().subtasks.filter(a => a.isCompleted).length;
+  });
 }

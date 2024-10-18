@@ -11,4 +11,4 @@
 
 ## Known Bugs
 
-- [] When refreshing page, values are not being reset.
+- [x] When refreshing page, values are not being reset.
