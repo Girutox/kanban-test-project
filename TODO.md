@@ -11,4 +11,4 @@
 
 ## Known Bugs
 
-- [] When refreshing page, active board name is not reset.
+- [] When refreshing page, values are not being reset.

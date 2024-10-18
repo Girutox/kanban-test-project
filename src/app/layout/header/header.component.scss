@@ -1,12 +1,12 @@
 @import '../../../styles/variables';
 
-header {
+:host {
   border-bottom: 2px solid $lines-light;
 
   display: flex;
   align-items: center;
 
-  height: 100%;
+  background-color: $white;
 }
 
 .logo {

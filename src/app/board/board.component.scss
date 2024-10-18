@@ -9,7 +9,10 @@
   display: flex;
   flex-direction: column;
 
-  background-color: $light-grey;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  margin-right: 20px;
 }
 
 :host(.start-aligned) {
