@@ -15,6 +15,7 @@ export class BoardService {
       "columns": [
         {
           "name": "Todo",
+          "color": "#ff5733",
           "tasks": [
             {
               "title": "Plan Product Hunt launch",
@@ -93,10 +94,12 @@ export class BoardService {
         },
         {
           "name": "Doing",
+          "color": "#d5e723",
           "tasks": []
         },
         {
           "name": "Done",
+          "color": "#2367e7",
           "tasks": []
         }
       ]
@@ -106,6 +109,7 @@ export class BoardService {
       "columns": [
         {
           "name": "Now",
+          "color": "#e72382",
           "tasks": [
             {
               "title": "Launch version one",
@@ -145,10 +149,12 @@ export class BoardService {
         },
         {
           "name": "Next",
+          "color": "#23e7e1",
           "tasks": []
         },
         {
           "name": "Later",
+          "color": "#23e729",
           "tasks": []
         }
       ]

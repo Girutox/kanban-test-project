@@ -12,6 +12,7 @@ export interface Task {
 
 export interface Column {
   name: string;
+  color: string;
   tasks: Task[];
 }
 

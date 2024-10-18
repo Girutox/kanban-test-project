@@ -8,8 +8,8 @@
 } @else {
 <div class="board-content">
   @for (column of boardColumns; track $index) {
-  <app-board-column [status]="column.name" [tasks]="column.tasks" />
+  <app-board-column [status]="column.name" [statusColor]="column.color" [tasks]="column.tasks" />
   }
-  <app-board-column [status]="null" [tasks]="null" />
+  <app-board-column />
 </div>
 }
