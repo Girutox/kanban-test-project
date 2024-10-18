@@ -1,8 +1,9 @@
 @import '../../../styles/variables';
 
-aside {
+:host {
   border-right: 2px solid $lines-light;
-  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   height: 100%;
 
   padding: 25px 25px 25px 0;

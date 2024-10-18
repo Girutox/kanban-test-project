@@ -1,10 +1,16 @@
+@import '../../../styles/variables';
+
 :host {
   text-align: left;
   min-width: 280px;
   max-width: 280px;
 
+  max-height: 800px;
+
   display: flex;
   flex-direction: column;
+
+  overflow: auto;
 }
 
 .status-container {
@@ -30,4 +36,9 @@
   gap: 20px;
 
   flex-grow: 1;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background-color: $light-grey;
 }
