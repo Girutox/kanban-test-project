@@ -164,13 +164,20 @@ export class BoardService {
 
   activeBoardName = signal<string>('');
 
-  constructor() { }
+  constructor() {
+    const activeBoardName = window.localStorage.getItem('activeBoardName');
+    if (activeBoardName) {
+      this.setActiveBoardName(activeBoardName);
+    }
+  }
 
   getBoardColumns(name: string) {
     return [...this.boards().filter(a => a.name == name)[0].columns];
   }
 
   setActiveBoardName(boardName: string) {
-    this.activeBoardName.set(boardName);    
+    this.activeBoardName.set(boardName);
+
+    window.localStorage.setItem('activeBoardName', boardName);
   }
 }

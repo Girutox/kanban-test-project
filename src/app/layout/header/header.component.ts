@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnInit } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
 import { BoardService } from '../../board.service';
 
@@ -14,7 +14,7 @@ export class HeaderComponent {
   sidebarHidden = input<boolean>(false);
 
   activeBoardName = this.boardService.activeBoardName;
-  isBoardEmpty = computed(() => this.boardService.getBoardColumns(this.activeBoardName()).length == 0);
-
-  constructor() { }
+  isBoardEmpty = computed(() => {    
+    return (this.activeBoardName()) ? this.boardService.getBoardColumns(this.activeBoardName()).length == 0 : true;
+  });
 }

@@ -26,8 +26,10 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
       next: (params) => {
-        this.boardColumns = this.boardService.getBoardColumns(params['name']);
-        this.isSpecial = this.boardColumns.length > 0;
+        if (params['name']) {    
+          this.boardColumns = this.boardService.getBoardColumns(params['name']);
+          this.isSpecial = this.boardColumns.length > 0;
+        }
       }
     });
   }
