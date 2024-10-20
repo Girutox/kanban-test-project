@@ -1,9 +1,29 @@
 @if (boardColumns.length == 0) {
 <div class="empty-board-content">
   <h2>This board is empty. Create a new column to get started.</h2>
-  <app-custom-button type="primary" size="large">
+  <app-custom-button type="primary" size="large" (customClick)="onAddNewColumn(content)">
     + Add New Column
   </app-custom-button>
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h2 class="custom-modal-title">Add New Column ({{boardService.activeBoardName()}}) </h2>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="columnName">Column Name</label>
+          <input type="text" class="form-control" id="columnName" placeholder="Enter column name" required>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <app-custom-button type="primary" size="large" (customClick)="onCreateNewColumn()">
+        Create New Column
+      </app-custom-button>
+    </div>
+  </ng-template>
+
 </div>
 } @else {
 <div class="board-content">

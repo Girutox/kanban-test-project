@@ -6,7 +6,9 @@
 - [x] Align header logic to obtain the current selected board.
 - [x] Fix SVG not obtaining color from parent.
 
-- [] Continue logic of main process (columns, tasks, etc.).
+- [-] Create modal component.
+- [] Check viewEncapsulation for custom button.
+- [] Re-use code/template for adding new column.
 - [] Complete 'Create New Board' action.
 
 ## Known Bugs

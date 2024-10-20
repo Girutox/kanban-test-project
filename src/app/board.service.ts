@@ -180,4 +180,17 @@ export class BoardService {
 
     window.localStorage.setItem('activeBoardName', boardName);
   }
+
+  addNewColumn(boardName: string, columnName: string) {
+    const board = this.boards().filter(a => a.name == boardName)[0];
+    board.columns.push({
+      name: columnName,
+      color: '#ff5733', // TO DO: Randomize color
+      tasks: []
+    });
+
+    this.boards.set([...this.boards()]);
+
+    console.log(this.boards());    
+  }
 }
