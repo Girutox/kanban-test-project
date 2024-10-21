@@ -1,6 +1,6 @@
-import { Component, effect, inject, OnInit, TemplateRef } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal, TemplateRef } from '@angular/core';
 import { BoardService } from '../board.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Column } from '../model/board.model';
 import { CustomButtonComponent } from "../UI/custom-button/custom-button.component";
 import { BoardColumnComponent } from "./board-column/board-column.component";
@@ -15,32 +15,29 @@ import { ManageBoardComponent } from './manage-board/manage-board.component';
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
   host: {
-    '[class.start-aligned]': 'specialClass'
+    '[class.start-aligned]': 'isSpecial()'
   }
 })
 export class BoardComponent implements OnInit {
   boardService = inject(BoardService);
   modalService = inject(NgbModal);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
 
-  boardName = '';
-  boardColumns: Column[] = [];
-  isSpecial = true;
-
-  constructor() {
-    effect(() => {
-      this.boardColumns = this.boardService.getBoardColumns(this.boardName);
-      this.isSpecial = this.boardColumns.length > 0;
-    });
-  }
+  boardId = signal<number>(0);
+  boardColumns = computed<Column[]>(() => this.boardService.getBoardColumns(this.boardId()));
+  isSpecial = computed<boolean>(() => this.boardColumns.length > 0);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
       next: (params) => {
-        if (params['name']) {
-          this.boardName = params['name'];
-          this.boardColumns = this.boardService.getBoardColumns(this.boardName);
-          this.isSpecial = this.boardColumns.length > 0;
+        if (params['id']) {
+          this.boardId.set(params['id']);
+
+          // Redirect to home if board does not exist
+          if (!this.boardService.boardExists(this.boardId())) {
+            this.router.navigate(['/']);
+          }
         }
       }
     });

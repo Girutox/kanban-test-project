@@ -16,9 +16,12 @@ export class HeaderComponent {
   sidebarHidden = input<boolean>(false);
   showFloatingCard = signal(false);
 
-  activeBoardName = this.boardService.activeBoardName;
+  activeBoardId = this.boardService.activeBoardId;
+  boardName = computed(() => {
+    return this.activeBoardId() ? this.boardService.getBoardName(this.activeBoardId()) : '';
+  });
   isBoardEmpty = computed(() => {    
-    return (this.activeBoardName()) ? this.boardService.getBoardColumns(this.activeBoardName()).length == 0 : true;
+    return (this.activeBoardId()) ? this.boardService.getBoardColumns(this.activeBoardId()).length == 0 : true;
   });
 
   onToggleFloatingCard() {

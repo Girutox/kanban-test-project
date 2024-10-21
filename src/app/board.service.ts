@@ -7,10 +7,12 @@ import { Board, Column } from './model/board.model';
 export class BoardService {
   boards = signal<Board[]>([
     {
+      "id": 1,
       "name": "Platform Launch",
       "columns": []
     },
     {
+      "id": 2,
       "name": "Marketing Plan",
       "columns": [
         {
@@ -105,6 +107,7 @@ export class BoardService {
       ]
     },
     {
+      "id": 3,
       "name": "Roadmap",
       "columns": [
         {
@@ -162,48 +165,91 @@ export class BoardService {
   ]);
   allBoards = this.boards.asReadonly();
 
-  activeBoardName = signal<string>('');
+  activeBoardId = signal<number | null>(null);
 
   constructor() {
-    const activeBoardName = window.localStorage.getItem('activeBoardName');
-    if (activeBoardName) {
-      this.setActiveBoardName(activeBoardName);
+    const activeBoardId = window.localStorage.getItem('activeBoardId');
+    if (activeBoardId) {
+      this.setActiveBoardId(parseInt(activeBoardId));
     }
   }
 
-  getBoardColumns(name: string) {
-    return [...this.boards().filter(a => a.name == name)[0].columns];
+  /**
+   * Obtains the stored columns/status for the specified board.
+   * @param id - The ID of the board to retrieve the columns.
+  */
+  getBoardColumns(id: number | null) {
+    const board = this.boards().filter(a => a.id == id);
+    if (board.length == 0) {
+      return [];
+    }
+    return [...board[0].columns];
   }
 
-  setActiveBoardName(boardName: string) {
-    this.activeBoardName.set(boardName);
-
-    window.localStorage.setItem('activeBoardName', boardName);
+  getBoard(id: number) {
+    return { ...this.boards().find(a => a.id == id)! };
   }
 
-  addNewColumn(boardName: string, columnName: string) {
-    const board = this.boards().filter(a => a.name == boardName)[0];
-    board.columns.push({
-      name: columnName,
-      color: '#ff5733', // TO DO: Randomize color
-      tasks: []
-    });
-
-    this.boards.set([...this.boards()]); // TO DO: Use immutable data structure
+  getBoardName(id: number | null) {
+    return this.boards().find(a => a.id == id)?.name || '';
   }
 
-  saveBoard(name: string, columns: Column[]) {
-    const board = this.boards().find(a => a.name == this.activeBoardName())!;
-    board.name = name;
+  boardExists(id: number) {
+    return this.boards().some(a => a.id == id);
+  }
 
+  /**
+   * Updates/Adds the specified board.
+   * @param boardName - The name of the board to be managed.
+   * @param columns - The columns data to be included in the board.
+  */
+  saveBoard(id: number | null, name: string, columns: Column[]) {
+    let board: Board;
+
+    // If board does not exist, create a new one
+    // If it exists,remove it and then update the name
+    if (id != null) {
+      const boardIndex = this.boards().findIndex(a => a.id == id);
+      board = { ...this.boards()[boardIndex] };
+      this.boards().splice(boardIndex, 1);
+      board.name = name;
+    } else {
+      board = {
+        id: Math.max(...this.boards().map(a => a.id)) + 1,
+        name: name,
+        columns: []
+      };
+    }
+
+    // Update columns
     for (const column of columns) {
       const currentColumn = board.columns.find(a => a.name == column.name);
 
-      column.color = currentColumn?.color || '#ff5733'; // TO DO: Randomize color
+      column.color = currentColumn?.color || this.getRandomHexColor();
       column.tasks = currentColumn?.tasks || [];
-    }    
+    }
     board.columns = columns;
 
-    this.boards.set([...this.boards()]); // TO DO: Use immutable data structure
+    this.boards.set([...this.boards(), board]);
+  }
+
+  /**
+   * Stores/Updates the current selected board ID.
+   * @param id - The ID of the board currently selected (route).
+  */
+  setActiveBoardId(id: number) {
+    this.activeBoardId.set(id);
+    window.localStorage.setItem('activeBoardId', id.toString());
+  }
+
+  private getRandomHexColor(): string {
+    const getRandomValue = () => Math.floor(Math.random() * 256);
+    const toHex = (value: number) => value.toString(16).padStart(2, '0');
+  
+    const red = getRandomValue();
+    const green = getRandomValue();
+    const blue = getRandomValue();
+  
+    return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
   }
 }

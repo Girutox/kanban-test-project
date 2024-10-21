@@ -1,6 +1,6 @@
-import { Component, inject, input, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, input, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { CustomButtonComponent } from '../../UI/custom-button/custom-button.component';
-import { Column } from '../../model/board.model';
+import { Board, Column } from '../../model/board.model';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component";
 import { CommonModule } from '@angular/common';
@@ -19,8 +19,9 @@ export class ManageBoardComponent implements OnInit {
   modalService = inject(NgbModal);
 
   isNew = input.required<boolean>();
-  name = input<string | null>(null);
-  columns = input<Column[]>([]);
+  id = input<number | null>(null);
+  name = signal<string>('');
+  columns = signal<Column[]>([]);
 
   form = new FormGroup({
     boardName: new FormControl('', Validators.required),
@@ -32,6 +33,14 @@ export class ManageBoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.id() != null) {
+      const board: Board = this.boardService.getBoard(this.id() ?? 0);
+      if (board) {
+        this.name.set(board.name);
+        this.columns.set(board.columns);
+      }
+    }
+
     this.form.controls.boardName.setValue(this.name());
     for (const column of this.columns()) {
       (<FormArray>this.form.get('columns')).push(
@@ -59,7 +68,7 @@ export class ManageBoardComponent implements OnInit {
       return;
     }
 
-    this.boardService.saveBoard(this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []);
+    this.boardService.saveBoard(this.id(), this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []);
     this.modalService.dismissAll();
   }
 }

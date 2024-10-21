@@ -7,10 +7,10 @@
 - [x] Fix SVG not obtaining color from parent.
 
 - [-] Create modal component.
-- [] Check viewEncapsulation for custom button.
-- [] Re-use code/template for adding new column.
+- [] Randomize colors whe adding columns.
 - [] Complete 'Create New Board' action.
 
 ## Known Bugs
 
 - [x] When refreshing page, values are not being reset.
+- [] Fix styles for sidebar ALL BOARDS section.

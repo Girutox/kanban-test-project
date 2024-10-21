@@ -137,6 +137,8 @@ h4 {
   flex-direction: column;
   gap: 7px;
 
+  // position: relative;
+
   label {
     @include body-m;
     color: $main-purple;
@@ -150,14 +152,18 @@ h4 {
       color: rgba($black, 0.25);
     }
 
-    &.ng-touched.ng-dirty.ng-invalid {
+    &.ng-touched.ng-invalid {
       border: 1px solid $red;
 
-      &::after {
+      &::before {
         content: 'This field is required';
         color: $red;
         font-size: 12px;
         margin-top: 5px;
+
+        // position: absolute;
+        // top: 0;
+        // left: 0;
       }
     }
 

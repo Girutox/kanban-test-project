@@ -4,18 +4,18 @@
 <div class="modal-body">
   <form class="custom-form" [formGroup]="form">
     <div class="form-group">
-      <label for="boardName">Board Name</label>
+      <label for="boardName">Board Name (*)</label>
       <input type="text" class="form-control" id="boardName" placeholder="e.g Web Design" formControlName="boardName">
     </div>
     <div class="form-group">
       <label>Columns</label>
       @if (form.controls.columns.controls.length == 0) {
-        <p>Start adding columns to your board! 👇</p>
+      <p>Start adding columns to your board! 👇</p>
       } @else {
       <div formArrayName="columns" class="columns-list">
         <!-- @for (item of getColumns; track $index) { // TO DO: Check if this is possible to be done with the newest approach of "for loop in template (@for)" -->
         <div class="column-section" *ngFor="let column of getColumns; let i = index" [formGroupName]="i">
-          <input type="text" class="form-control" formControlName="name">
+          <input type="text" class="form-control" formControlName="name" placeholder="(*) Status name required">
           <button (click)="onRemoveColumn(i)">
             <app-icon-cross />
           </button>
@@ -26,15 +26,20 @@
       }
     </div>
     <div class="add-new-column-section">
-      <app-custom-button type="secondary" size="large" (customClick)="onAddNewColumn()">
+      <app-custom-button mode="secondary" size="large" (customClick)="onAddNewColumn()">
         + Add New Column
       </app-custom-button>
     </div>
   </form>
 </div>
 <div class="modal-footer">
+  <div class="form-status-section">
+    @if (form.invalid) {
+    <p>* Please complete all the required form values</p>
+    }
+  </div>
   <div class="save-section">
-    <app-custom-button type="primary" size="large" (customClick)="onSave()">
+    <app-custom-button mode="primary" size="large" (customClick)="onSave()" [disabled]="form.invalid">
       {{isNew() ? 'Create New Board' : 'Save Changes'}}
     </app-custom-button>
   </div>

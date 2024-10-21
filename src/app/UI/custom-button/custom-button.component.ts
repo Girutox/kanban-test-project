@@ -9,7 +9,8 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './custom-button.component.scss'
 })
 export class CustomButtonComponent {
-  type = input.required<'primary' | 'secondary' | 'destructive'>();
+  type = input<'button' | 'submit'>('button');
+  mode = input.required<'primary' | 'secondary' | 'destructive'>();
   size = input<'large' | 'small'>();
   disabled = input(false);
 

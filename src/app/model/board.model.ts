@@ -17,6 +17,7 @@ export interface Column {
 }
 
 export interface Board {
+  id: number;
   name: string;
   columns: Column[];
 }

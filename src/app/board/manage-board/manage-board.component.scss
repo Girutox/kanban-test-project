@@ -27,8 +27,25 @@
 
 .save-section {
   flex-grow: 1;
+  width: 100%;
 }
 
 p {
   @include body-m;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.form-status-section {
+  width: 100%;
+
+  p {
+    @include body-m;
+    color: $red;
+  }
 }

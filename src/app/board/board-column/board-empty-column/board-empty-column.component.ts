@@ -17,9 +17,9 @@ import { BoardService } from '../../../board.service';
 export class BoardEmptyColumnComponent {
   isNewColumn = input<boolean>(true);
   boardService = inject(BoardService);
-  boardName = this.boardService.activeBoardName;
+  boardId = this.boardService.activeBoardId;
   boardColumns = computed(() => {
-    return this.boardService.getBoardColumns(this.boardName());
+    return this.boardService.getBoardColumns(this.boardId());
   });
   modalService = inject(NgbModal);
 
