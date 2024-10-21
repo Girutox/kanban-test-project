@@ -1,11 +1,11 @@
 import { Injectable, signal } from '@angular/core';
-import { Board } from './model/board.model';
+import { Board, Column } from './model/board.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
-  private boards = signal<Board[]>([
+  boards = signal<Board[]>([
     {
       "name": "Platform Launch",
       "columns": []
@@ -189,8 +189,21 @@ export class BoardService {
       tasks: []
     });
 
-    this.boards.set([...this.boards()]);
+    this.boards.set([...this.boards()]); // TO DO: Use immutable data structure
+  }
 
-    console.log(this.boards());    
+  saveBoard(name: string, columns: Column[]) {
+    const board = this.boards().find(a => a.name == this.activeBoardName())!;
+    board.name = name;
+
+    for (const column of columns) {
+      const currentColumn = board.columns.find(a => a.name == column.name);
+
+      column.color = currentColumn?.color || '#ff5733'; // TO DO: Randomize color
+      column.tasks = currentColumn?.tasks || [];
+    }    
+    board.columns = columns;
+
+    this.boards.set([...this.boards()]); // TO DO: Use immutable data structure
   }
 }

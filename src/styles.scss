@@ -125,3 +125,46 @@ h3 {
 h4 {
   @include heading-s;
 }
+
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  label {
+    @include body-m;
+    color: $main-purple;
+  }
+
+  input {
+    @include body-l;
+    color: $black;
+    
+    &::placeholder {
+      color: rgba($black, 0.25);
+    }
+
+    &.ng-touched.ng-dirty.ng-invalid {
+      border: 1px solid $red;
+
+      &::after {
+        content: 'This field is required';
+        color: $red;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border: 1px solid $main-purple;
+    }
+  }
+}

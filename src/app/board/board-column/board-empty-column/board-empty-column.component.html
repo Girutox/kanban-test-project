@@ -3,3 +3,8 @@
 } @else {
   <p>No tasks</p>
 }
+
+<!-- Modal template for managing the complete board -->
+<ng-template #manageBoardModal let-manageBoardModal>
+  <app-manage-board [isNew]="false" [name]="boardName()" [columns]="boardColumns()" />
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, HostBinding, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { BoardListComponent } from './board-list/board-list.component';
@@ -21,11 +21,12 @@ import { IconHideSidebarComponent } from "../../UI/SVG/icon-hide-sidebar/icon-hi
         animate('0.1s ease-out')
       ])
     ])
-  ]
+  ],
+  host: {
+    '[@fadeInOut]': 'fadeInOutAnimation'
+  }
 })
-export class SidebarComponent {
-  @HostBinding('@fadeInOut') fadeInOutAnimation = true;
-  
+export class SidebarComponent {  
   hideSidebar = output<boolean>();
 
   onHideSidebar() {
