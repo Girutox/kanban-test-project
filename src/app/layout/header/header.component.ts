@@ -3,13 +3,23 @@ import { CustomButtonComponent } from "../../UI/custom-button/custom-button.comp
 import { BoardService } from '../../board.service';
 import { IconVerticalEllipsisComponent } from "../../UI/SVG/icon-vertical-ellipsis/icon-vertical-ellipsis.component";
 import { FloatingCardComponent } from '../../UI/floating-card/floating-card.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: 0 })),
+      state('*', style({ opacity: 1 })),
+      transition(':enter', [
+        animate('0.3s ease-in')
+      ])
+    ])
+  ]
 })
 export class HeaderComponent {
   boardService = inject(BoardService);
