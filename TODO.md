@@ -9,9 +9,13 @@
 - [-] Create modal component.
 - [x] Randomize colors whe adding columns.
 - [x] Complete 'Create New Board' action.
+- [] Complete View Task.
+- [] Complete Mange Task.
+- [] Complete Menu Dropdown functionality.
+
 
 ## Known Bugs
 
 - [x] When refreshing page, values are not being reset.
-- [] Fix styles for sidebar ALL BOARDS section.
-- [] Fix ORDER OF ALL BOARDS section changing when adding columns.
+- [x] Fix styles for sidebar ALL BOARDS section.
+- [x] Fix ORDER OF ALL BOARDS section changing when adding columns.

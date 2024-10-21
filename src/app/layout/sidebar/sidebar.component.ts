@@ -1,8 +1,9 @@
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { BoardListComponent } from './board-list/board-list.component';
 import { IconHideSidebarComponent } from "../../UI/SVG/icon-hide-sidebar/icon-hide-sidebar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -27,7 +28,13 @@ import { IconHideSidebarComponent } from "../../UI/SVG/icon-hide-sidebar/icon-hi
   }
 })
 export class SidebarComponent {  
+  router = inject(Router);
+
   hideSidebar = output<boolean>();
+
+  onLogoClick() {
+    this.router.navigate(['/']);
+  }
 
   onHideSidebar() {
     this.hideSidebar.emit(true);

@@ -17,6 +17,12 @@
   align-items: center;
 
   padding: 0 25px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($main-purple, 0.1);
+  }
 }
 
 .title-section {

@@ -4,6 +4,7 @@ import { BoardService } from '../../board.service';
 import { IconVerticalEllipsisComponent } from "../../UI/SVG/icon-vertical-ellipsis/icon-vertical-ellipsis.component";
 import { FloatingCardComponent } from '../../UI/floating-card/floating-card.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class HeaderComponent {
   boardService = inject(BoardService);
+  router = inject(Router);
+
   sidebarHidden = input<boolean>(false);
   showFloatingCard = signal(false);
 
@@ -33,6 +36,10 @@ export class HeaderComponent {
   isBoardEmpty = computed(() => {    
     return (this.activeBoardId()) ? this.boardService.getBoardColumns(this.activeBoardId()).length == 0 : true;
   });
+  
+  onLogoClick() {
+    this.router.navigate(['/']);
+  }
 
   onToggleFloatingCard() {
     this.showFloatingCard.set(!this.showFloatingCard());
