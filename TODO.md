@@ -9,7 +9,7 @@
 - [-] Create modal component.
 - [x] Randomize colors whe adding columns.
 - [x] Complete 'Create New Board' action.
-- [] Complete View Task.
+- [WIP] Complete View Task.
 - [] Complete Mange Task.
 - [] Complete Menu Dropdown functionality.
 

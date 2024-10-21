@@ -4,11 +4,6 @@
   <app-custom-button mode="primary" size="large" (customClick)="onAddNewColumn(manageBoardModal)">
     + Add New Column
   </app-custom-button>
-  
-  <!-- Modal template for managing the complete board -->
-  <ng-template #manageBoardModal let-manageBoardModal>
-    <app-manage-board [isNew]="false" [id]="boardId()" />
-  </ng-template>
 </div>
 } @else {
 <div class="board-content">
@@ -18,3 +13,8 @@
   <app-board-column />
 </div>
 }
+
+<!-- Modal template for managing the complete board -->
+<ng-template #manageBoardModal let-manageBoardModal>
+  <app-manage-board [isNew]="false" [id]="boardId()" />
+</ng-template>

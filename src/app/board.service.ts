@@ -136,7 +136,7 @@ export class BoardService {
               "subtasks": [
                 {
                   "title": "Interview 10 customers",
-                  "isCompleted": false
+                  "isCompleted": true
                 },
                 {
                   "title": "Review common customer pain points and suggestions",
