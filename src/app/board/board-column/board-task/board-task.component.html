@@ -1,7 +1,2 @@
 <h3>{{task().title}}</h3>
 <p>{{completedSubtaskCount()}} of {{task().subtasks.length}} subtasks</p>
-
-<!-- Modal template for viewing the complete task -->
-<ng-template #viewTaskModal let-viewTaskModal>
-  <app-view-task [task]="task()" />
-</ng-template>

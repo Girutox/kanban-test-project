@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output, TemplateRef, viewChild } from '@angular/core';
+import { Component, computed, inject, input, TemplateRef, viewChild } from '@angular/core';
 import { Task } from '../../../model/board.model';
 import { ViewTaskComponent } from "../../../Task/view-task/view-task.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,9 +14,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   }
 })
 export class BoardTaskComponent {
-  modalService = inject(NgbModal);
+  modalService = inject(NgbModal);  
 
   task = input.required<Task>();
+  columnName = input<string>();
   viewTaskModal = viewChild<TemplateRef<any>>('viewTaskModal');
 
   completedSubtaskCount = computed(() => {
@@ -24,6 +25,8 @@ export class BoardTaskComponent {
   });
 
   onViewTask() {
-    this.modalService.open(this.viewTaskModal());
+    const modalRef = this.modalService.open(ViewTaskComponent);
+    modalRef.componentInstance.task = this.task;
+    modalRef.componentInstance.columnName = this.columnName;
   }
 }

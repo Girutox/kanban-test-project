@@ -27,16 +27,29 @@
       display: flex;
       gap: 10px;
 
+      border-radius: 4px;
+
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($main-purple, 0.25);
+      }
+
       .subtask-item-checkbox {
         width: 15px;
         height: 15px;
-        cursor: pointer;
         accent-color: $main-purple;
         padding: 10px;
+
+        outline: none;
 
         /* Custom accent color */
         border: 2px solid #828FA3;
         border-radius: 2px;
+
+        &:focus {
+          outline: 1px solid $main-purple;
+        }
       }
 
       .subtask-item-title {

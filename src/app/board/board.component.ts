@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, OnInit, signal, TemplateRef } from '@angular/core';
 import { BoardService } from '../board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Column } from '../model/board.model';
@@ -25,13 +25,15 @@ export class BoardComponent implements OnInit {
   router = inject(Router);
 
   boardId = signal<number>(0);
-  boardColumns = computed<Column[]>(() => this.boardService.getBoardColumns(this.boardId()));
+  boardColumns = computed<Column[]>(() => {    
+    return <Column[]>JSON.parse(JSON.stringify(this.boardService.getBoardColumns(this.boardId())));
+  });
   isSpecial = computed<boolean>(() => this.boardColumns.length > 0);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
       next: (params) => {
-        if (params['id']) {
+        if (params['id']) {          
           this.boardId.set(params['id']);
 
           // Redirect to home if board does not exist

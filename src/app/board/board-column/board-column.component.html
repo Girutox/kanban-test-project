@@ -11,7 +11,7 @@
   <app-board-empty-column [isNewColumn]="true" />
   } @else {
   @for (task of tasks(); track $index) {
-  <app-board-task [task]="task" />
+  <app-board-task [task]="task" [columnName]="status()" />
   }
   }
 </div>

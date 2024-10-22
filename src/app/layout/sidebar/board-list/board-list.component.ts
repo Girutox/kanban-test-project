@@ -19,7 +19,6 @@ export class BoardListComponent {
   boards = this.boardService.allBoards;
 
   onCreateNewBoard(manageBoardModal: TemplateRef<any>) {
-    console.log('Create new board');    
     this.modalService.open(manageBoardModal);
   }
 }

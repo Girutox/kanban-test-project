@@ -1,6 +1,7 @@
-<select class="form-control custom-select">
-  @for (item of options(); track $index) {
+<div [formGroup]="form()">
+  <select class="custom-select form-control" formControlName="status" (change)="onChange()">
+    @for (item of options(); track $index) {
     <option value="{{item.value}}">{{item.display}}</option>
-  }
-</select>
-<img src="assets/icon-chevron-down.svg" alt="" class="down-arrow" />
+    }
+  </select>
+</div>

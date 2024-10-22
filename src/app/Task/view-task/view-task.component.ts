@@ -1,6 +1,6 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
-import { Task } from '../../model/board.model';
+import { Subtask, Task } from '../../model/board.model';
 import { CommonModule } from '@angular/common';
 import { CustomSelectComponent } from '../../UI/custom-select/custom-select.component';
 import { BoardService } from '../../board.service';
@@ -18,28 +18,38 @@ interface SubtaskForm {
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.scss'
 })
-export class ViewTaskComponent implements OnInit {
+export class ViewTaskComponent implements OnInit, OnDestroy {
   boardService = inject(BoardService);
+  formChanged = false;
+  
   task = input.required<Task>();
+  columnName = input<string>();
 
   form = new FormGroup({
     subtasks: new FormArray<FormGroup<SubtaskForm>>([]),
-    status: new FormControl('', Validators.required)
+    status: new FormControl('')
   })
 
   get getSubtasksControls() {    
     return this.form.controls.subtasks.controls;
   }
 
-  ngOnInit(): void {
-    this.form.controls.status.setValue(this.task().status);
+  get getCompletedSubtaskCount() {    
+    return this.form.controls.subtasks.value.filter(a => a.isCompleted).length;
+  }
 
+  ngOnInit(): void {
     this.task().subtasks.forEach(a => {
       (<FormArray>this.form.get('subtasks')).push(new FormGroup({
         title: new FormControl(a.title, Validators.required),
         isCompleted: new FormControl(a.isCompleted, Validators.required)
       }));
     });
+    this.form.controls.status.setValue(this.task().status);    
+  }
+
+  onControlChange() {
+    this.formChanged = true;    
   }
 
   getStatusOptions() {
@@ -47,7 +57,14 @@ export class ViewTaskComponent implements OnInit {
     return columns.map(a => ({ value: a.name, display: a.name }));
   }
 
-  getCompletedSubtaskCount() {
-    return this.task().subtasks.filter(a => a.isCompleted).length;
+  onSetCheckedRow(task: FormGroup<SubtaskForm>) {
+    task.controls.isCompleted.setValue(!task.controls.isCompleted.value);
+    this.onControlChange();
+  }
+
+  ngOnDestroy(): void {
+    if (this.formChanged) {      
+      this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.controls.subtasks.value, this.form.controls.status.value ?? '');
+    }
   }
 }
