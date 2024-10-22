@@ -2,25 +2,24 @@
   <h2 class="custom-modal-title">{{task().title}}</h2>
 </div>
 <div class="modal-body">
-  <form class="custom-form">
+  <form class="custom-form" [formGroup]="form">
     <p class="task-description">{{task().description}}</p>
     <div class="subtasks-section">
-      <p class="subtasks-status">Subtasks ({{getCompletedSubtaskCount()}}) of ({{task().subtasks.length}})</p>
-      <div class="subtask-items">
-        @for (task of task().subtasks; track $index) {
-        <div class="subtask-item">
-          <input type="checkbox" class="subtask-item-checkbox" [checked]="task.isCompleted" />
-          <p class="subtask-item-title" [ngClass]="{'completed': task.isCompleted, 'incomplete': !task.isCompleted}">
-            {{task.title}}</p>
+      <p class="subtasks-status">Subtasks ({{getCompletedSubtaskCount()}} of {{task().subtasks.length}})</p>
+      <div class="subtask-items" formArrayName="subtasks">
+        @for (task of getSubtasksControls; track $index) {
+        <div class="subtask-item" [formGroupName]="$index">
+          <input type="checkbox" class="subtask-item-checkbox" formControlName="isCompleted" #isCompleted />
+          <p class="subtask-item-title" [ngClass]="{'completed': task.controls.isCompleted.value, 'incomplete': !task.controls.isCompleted.value}">
+            {{task.controls.title.value}}
+          </p>
         </div>
         }
       </div>
     </div>
     <div class="form-group">
       <label for="currentStatus">Current Status</label>
-      <select class="form-control status-select">
-        <option value="Not Started">TBD</option>
-      </select>
+      <app-custom-select [options]="getStatusOptions()" />
     </div>
   </form>
 </div>
