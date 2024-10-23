@@ -225,7 +225,7 @@ export class BoardService {
     let board: Board;
 
     // If board does not exist, create a new one
-    // If it exists,remove it and then update the name
+    // If it exists, remove it and then update the name
     if (id != null) {
       const boardIndex = this.boards().findIndex(a => a.id == id);
       board = { ...this.boards()[boardIndex] };
@@ -261,6 +261,19 @@ export class BoardService {
     window.localStorage.setItem('activeBoardId', id.toString());
   }
 
+  /**
+   * Saves or updates a task within the specified column.
+   * If the task exists, it updates the task's details.
+   * If the task does not exist, it creates a new task.
+   * If the task's status changes, it moves the task to the new column.
+   * 
+   * @param columnName - The name of the column where the task is currently located.
+   * @param id - The ID of the task to be saved or updated.
+   * @param subtasks - The list of subtasks associated with the task.
+   * @param status - The status of the task, which corresponds to the column name.
+   * @param title - The title of the task (optional).
+   * @param description - The description of the task (optional).
+   */
   saveTask(columnName: string, id: number, subtasks: Subtask[], status: string, title: string = '', description: string = '') {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
     const board = { ...this.boards()[boardIndex] };
@@ -299,6 +312,16 @@ export class BoardService {
     this.boards.set([...this.boards(), board]);
   }
 
+  
+  /**
+   * Generates a random hexadecimal color string.
+   *
+   * This function creates a random color by generating random values for the red, green,
+   * and blue components of the color, converting these values to hexadecimal, and then
+   * concatenating them into a single string prefixed with '#'.
+   *
+   * @returns {string} A random hexadecimal color string in the format '#RRGGBB'.
+   */
   private getRandomHexColor(): string {
     const getRandomValue = () => Math.floor(Math.random() * 256);
     const toHex = (value: number) => value.toString(16).padStart(2, '0');

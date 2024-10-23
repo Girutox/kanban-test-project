@@ -10,7 +10,7 @@
 - [x] Randomize colors whe adding columns.
 - [x] Complete 'Create New Board' action.
 - [x] Complete View Task.
-- [] Complete Manage Task.
+- [x] Complete Manage Task.
 - [] Complete Menu Dropdown functionality.
 - [] Align MODAL OPEN with component approach (?)
 
