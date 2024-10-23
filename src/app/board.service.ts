@@ -1,10 +1,13 @@
-import { Injectable, signal } from '@angular/core';
-import { Board, Column, Subtask, Task } from './model/board.model';
+import { inject, Injectable, signal } from '@angular/core';
+import { Board, Column, Subtask } from './model/board.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
+  router = inject(Router);
+
   private boards = signal<Board[]>([
     {
       "id": 1,
@@ -312,6 +315,19 @@ export class BoardService {
     this.boards.set([...this.boards(), board]);
   }
 
+  /**
+   * Deletes the currently active board.
+   *
+   * This function finds the index of the currently active board in the list of boards,
+   * removes it from the list, and then sets the active board ID to null.
+   */
+  deleteActiveBoard() {
+    const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
+    this.boards().splice(boardIndex, 1);
+    this.activeBoardId.set(null);
+
+    this.router.navigate(['/']);
+  }
   
   /**
    * Generates a random hexadecimal color string.

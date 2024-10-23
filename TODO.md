@@ -19,4 +19,4 @@
 - [x] When refreshing page, values are not being reset.
 - [x] Fix styles for sidebar ALL BOARDS section.
 - [x] Fix ORDER OF ALL BOARDS section changing when adding columns.
-- [] Tabbing out from COLUMNS or SUBTASKS dynamic inputs (form array) is focusing on X button instead of next row.
+- [x] Tabbing out from COLUMNS or SUBTASKS dynamic inputs (form array) is focusing on X button instead of next row.
