@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ViewEncapsulation } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BoardService } from '../../../../board.service';
 import { IconBoardComponent } from "../../../../UI/SVG/icon-board/icon-board.component";

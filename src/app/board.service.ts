@@ -5,7 +5,7 @@ import { Board, Column, Subtask, Task } from './model/board.model';
   providedIn: 'root'
 })
 export class BoardService {
-  boards = signal<Board[]>([
+  private boards = signal<Board[]>([
     {
       "id": 1,
       "name": "Platform Launch",
@@ -232,8 +232,9 @@ export class BoardService {
       this.boards().splice(boardIndex, 1);
       board.name = name;
     } else {
+      const newBoardId = this.boards().length > 0 ? Math.max(...this.boards().map(a => a.id)) + 1 : 1; // If no boards, start with ID 1
       board = {
-        id: Math.max(...this.boards().map(a => a.id)) + 1,
+        id: newBoardId,
         name: name,
         columns: []
       };
@@ -260,18 +261,7 @@ export class BoardService {
     window.localStorage.setItem('activeBoardId', id.toString());
   }
 
-  private getRandomHexColor(): string {
-    const getRandomValue = () => Math.floor(Math.random() * 256);
-    const toHex = (value: number) => value.toString(16).padStart(2, '0');
-
-    const red = getRandomValue();
-    const green = getRandomValue();
-    const blue = getRandomValue();
-
-    return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
-  }
-
-  saveTask(columnName: string, id: number, subtasks: Subtask[], status: string) {
+  saveTask(columnName: string, id: number, subtasks: Subtask[], status: string, title: string = '', description: string = '') {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
     const board = { ...this.boards()[boardIndex] };
     this.boards().splice(boardIndex, 1);
@@ -279,11 +269,23 @@ export class BoardService {
 
     const activeBoardColumn = board.columns.find(a => a.name == columnName)!;
     const taskIndex = activeBoardColumn.tasks.findIndex(b => b.id == id)!;
-    const task = activeBoardColumn.tasks[taskIndex];
+    let task = activeBoardColumn.tasks[taskIndex];
 
     if (columnName == status) {
-      task.subtasks = subtasks;
-      task.status = status;
+      if (task) {
+        task.subtasks = subtasks;
+        task.status = status;
+      } else {
+        const newTaskId = activeBoardColumn.tasks.length > 0 ? Math.max(...activeBoardColumn.tasks.map(a => a.id)) + 1 : 1; // If no tasks, start with ID 1
+        task = {
+          id: newTaskId, // TO DO: Get max ID from all columns (TEMP until DB connection)
+          title,
+          description,
+          subtasks,
+          status,
+        };
+        activeBoardColumn.tasks.push(task);
+      }
     } else {
       const targetColumn = board.columns.find(a => a.name == status)!;
       activeBoardColumn.tasks.splice(taskIndex, 1);
@@ -296,4 +298,16 @@ export class BoardService {
 
     this.boards.set([...this.boards(), board]);
   }
+
+  private getRandomHexColor(): string {
+    const getRandomValue = () => Math.floor(Math.random() * 256);
+    const toHex = (value: number) => value.toString(16).padStart(2, '0');
+
+    const red = getRandomValue();
+    const green = getRandomValue();
+    const blue = getRandomValue();
+
+    return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+  }
+
 }

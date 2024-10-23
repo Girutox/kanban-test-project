@@ -1,5 +1,5 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-custom-select',
@@ -11,6 +11,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class CustomSelectComponent {
   form = input.required<any>();
   options = input.required<{value: string, display: string}[]>();
+  customFormControlName = input.required<string>();
 
   change = output<void>();
 

@@ -6,7 +6,7 @@
 <section class="title-section">
   <h1>{{boardName()}}</h1>
   <div class="last-section">
-    <app-custom-button mode="primary" buttonSize="large" [disabled]="isBoardEmpty()">
+    <app-custom-button mode="primary" buttonSize="large" [disabled]="isBoardEmpty()" (customClick)="onAddNewTask()">
       + Add New Task
     </app-custom-button>
     <div class="menu-ellipsis">

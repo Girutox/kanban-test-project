@@ -5,11 +5,14 @@ import { IconVerticalEllipsisComponent } from "../../UI/SVG/icon-vertical-ellips
 import { FloatingCardComponent } from '../../UI/floating-card/floating-card.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ManageTaskComponent } from '../../Task/manage-task/manage-task.component';
+import { Task } from '../../model/board.model';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent],
+  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent, ManageTaskComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   animations: [
@@ -25,6 +28,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   boardService = inject(BoardService);
   router = inject(Router);
+  modalService = inject(NgbModal);
 
   sidebarHidden = input<boolean>(false);
   showFloatingCard = signal(false);
@@ -43,5 +47,11 @@ export class HeaderComponent {
 
   onToggleFloatingCard() {
     this.showFloatingCard.set(!this.showFloatingCard());
+  }
+
+  onAddNewTask() {
+    const modalRef = this.modalService.open(ManageTaskComponent);
+    modalRef.componentInstance.isNew = signal(true);
+    modalRef.componentInstance.task = signal<Task>({id: 0, title: '', description: '', subtasks: [], status: ''});
   }
 }

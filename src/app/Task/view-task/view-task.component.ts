@@ -6,7 +6,7 @@ import { CustomSelectComponent } from '../../UI/custom-select/custom-select.comp
 import { BoardService } from '../../board.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-interface SubtaskForm {
+export interface SubtaskForm {
   title: FormControl<string>;
   isCompleted: FormControl<boolean>;
 }

@@ -1,5 +1,5 @@
 <div [formGroup]="form()">
-  <select class="custom-select form-control" formControlName="status" (change)="onChange()">
+  <select class="custom-select form-control" [formControlName]="customFormControlName()" (change)="onChange()">
     @for (item of options(); track $index) {
     <option value="{{item.value}}">{{item.display}}</option>
     }

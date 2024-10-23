@@ -145,7 +145,7 @@ h4 {
     color: $medium-grey;
   }
 
-  input {
+  input, textarea {
     @include body-l;
     color: $black;
     
@@ -155,17 +155,6 @@ h4 {
 
     &.ng-touched.ng-invalid {
       border: 1px solid $red;
-
-      &::before {
-        content: 'This field is required';
-        color: $red;
-        font-size: 12px;
-        margin-top: 5px;
-
-        // position: absolute;
-        // top: 0;
-        // left: 0;
-      }
     }
 
     &:focus {

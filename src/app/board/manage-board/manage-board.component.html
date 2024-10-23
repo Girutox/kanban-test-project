@@ -22,7 +22,6 @@
         </div>
         <!-- } -->
       </div>
-
       }
     </div>
     <div class="add-new-column-section">
@@ -34,7 +33,7 @@
 </div>
 <div class="modal-footer">
   <div class="form-status-section">
-    @if (form.invalid) {
+    @if (form.invalid && form.touched) {
     <p>* Please complete all the required form values</p>
     }
   </div>

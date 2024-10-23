@@ -1,12 +1,12 @@
 @import '../../../styles/variables';
 
-.columns-list {
+.subtask-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.column-section {
+.subtask-section {
   display: flex;
   align-items: center;
 
@@ -19,7 +19,7 @@
   }
 }
 
-.add-new-column-section {
+.add-new-subtask-section {
   button {
     width: 100%;
   }

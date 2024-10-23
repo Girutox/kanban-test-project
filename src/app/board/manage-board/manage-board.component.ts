@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CustomButtonComponent } from '../../UI/custom-button/custom-button.component';
 import { Board, Column } from '../../model/board.model';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
