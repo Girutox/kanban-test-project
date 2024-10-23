@@ -16,7 +16,7 @@
         <!-- @for (item of getColumns; track $index) { // TO DO: Check if this is possible to be done with the newest approach of "for loop in template (@for)" -->
         <div class="column-section" *ngFor="let column of getColumns; let i = index" [formGroupName]="i">
           <input type="text" class="form-control" formControlName="name" placeholder="(*) Status name required">
-          <button (click)="onRemoveColumn(i)">
+          <button (click)="onRemoveColumn(i)" tabindex="-1">
             <app-icon-cross />
           </button>
         </div>

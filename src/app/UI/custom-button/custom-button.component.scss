@@ -9,6 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:focus {
+    outline: 1px solid $main-purple;
+  }
 }
 
 .large-size {

@@ -1,7 +1,8 @@
-<div [formGroup]="form()">
+<div [formGroup]="form()" class="form">
   <select class="custom-select form-control" [formControlName]="customFormControlName()" (change)="onChange()">
     @for (item of options(); track $index) {
     <option value="{{item.value}}">{{item.display}}</option>
     }
   </select>
+  <img src="assets/icon-chevron-down.svg" alt="" class="down-arrow" />
 </div>

@@ -1,5 +1,9 @@
 @import '../../../styles/variables';
 
+.form {
+  position: relative;
+}
+
 .custom-select {
   @include body-l;
   color: $black;
@@ -16,4 +20,12 @@
   &:focus {
     border-color: $main-purple;
   }
+}
+
+.down-arrow {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+
+  pointer-events: none;
 }
