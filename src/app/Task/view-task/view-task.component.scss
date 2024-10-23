@@ -1,5 +1,40 @@
 @import '../../../styles/variables';
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+
+  .custom-modal-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .menu-ellipsis {
+    position: relative;
+    min-width: 10px;
+
+    .pseudo-button {
+      cursor: pointer;
+    }
+
+    .floating-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      @include body-l;
+
+      .delete-option {
+        color: $red;
+      }
+    }
+  }
+}
+
 .modal-body {
   display: flex;
   flex-direction: column;
@@ -69,7 +104,8 @@
     }
   }
 
-  .status-select, .status-select option {
+  .status-select,
+  .status-select option {
     @include body-l;
     color: $black;
   }

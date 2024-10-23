@@ -51,5 +51,7 @@ h2 {
 }
 
 .custom-modal-title {
-  color: $black;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

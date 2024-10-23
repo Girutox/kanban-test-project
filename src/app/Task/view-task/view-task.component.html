@@ -1,5 +1,22 @@
 <div class="modal-header">
   <h2 class="custom-modal-title">{{task().title}}</h2>
+  <div class="menu-ellipsis">
+    <div class="pseudo-button" (click)="onToggleFloatingCard()">
+      <app-icon-vertical-ellipsis />
+    </div>
+    @if (showFloatingCard()) {
+    <app-floating-card>
+      <ul class="floating-card-list">
+        <li>
+          <button (click)="onEditTask()">Edit Task</button>
+        </li>
+        <li class="delete-option">
+          <button (click)="onDeleteTask()">Delete Task</button>
+        </li>
+      </ul>
+    </app-floating-card>
+    }
+  </div>
 </div>
 <div class="modal-body">
   <form class="custom-form" [formGroup]="form">

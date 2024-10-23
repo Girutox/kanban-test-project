@@ -70,7 +70,7 @@ export class ManageTaskComponent {
       return;
     }    
 
-    this.boardService.saveTask(this.form.value.status ?? '', this.task().id, <Subtask[]>this.form.value.subtasks, this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '');
+    this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.value.subtasks, this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '');
     this.modalService.dismissAll();
   }
 }

@@ -289,6 +289,8 @@ export class BoardService {
 
     if (columnName == status) {
       if (task) {
+        task.title = title == '' ? task.title : title;
+        task.description = description == '' ? task.description : description;
         task.subtasks = subtasks;
         task.status = status;
       } else {
@@ -307,6 +309,8 @@ export class BoardService {
       activeBoardColumn.tasks.splice(taskIndex, 1);
       targetColumn.tasks.push({
         ...task,
+        title: title == '' ? task.title : title,
+        description: description == '' ? task.description : description,
         subtasks: subtasks,
         status: status
       });
@@ -328,6 +332,19 @@ export class BoardService {
 
     this.router.navigate(['/']);
   }
+
+  deleteTask(columnName: string, id: number) {
+    const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
+    const board = { ...this.boards()[boardIndex] };
+    this.boards().splice(boardIndex, 1);
+    board.columns = [...board.columns];
+
+    const activeBoardColumn = board.columns.find(a => a.name == columnName)!;
+    const taskIndex = activeBoardColumn.tasks.findIndex(b => b.id == id)!;
+    activeBoardColumn.tasks.splice(taskIndex, 1);
+
+    this.boards.set([...this.boards(), board]);
+  }
   
   /**
    * Generates a random hexadecimal color string.
@@ -348,5 +365,4 @@ export class BoardService {
 
     return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
   }
-
 }

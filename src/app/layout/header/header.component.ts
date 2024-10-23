@@ -86,5 +86,8 @@ export class HeaderComponent {
     modalRef.componentInstance.title = signal('Delete this board?');
     modalRef.componentInstance.message = signal(`Are you sure you want to delete the ‘${this.boardName()}’ board? This action will remove all columns and tasks and cannot be reversed.`);
     modalRef.componentInstance.data = signal(this.boardName());
+    modalRef.componentInstance.confirmedAction = signal(() => {
+      this.boardService.deleteActiveBoard();
+    });
   }
 }

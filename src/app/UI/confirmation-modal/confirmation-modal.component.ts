@@ -17,6 +17,7 @@ export class ConfirmationModalComponent {
   title = input.required<string>();
   message = input.required<string>();
   data = input<string>(); // To expand types if needed
+  confirmedAction = input<any>();
 
   getStyledMessage(): string {
     if (typeof this.data() == 'string') {
@@ -27,7 +28,7 @@ export class ConfirmationModalComponent {
   }
 
   onDelete() {
-    this.boardService.deleteActiveBoard();
+    this.confirmedAction()();
     this.modalService.dismissAll();
   }
 
