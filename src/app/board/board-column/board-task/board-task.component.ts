@@ -25,7 +25,7 @@ export class BoardTaskComponent {
   });
 
   onViewTask() {
-    const modalRef = this.modalService.open(ViewTaskComponent);
+    const modalRef = this.modalService.open(ViewTaskComponent, { centered: true });
     modalRef.componentInstance.task = this.task;
     modalRef.componentInstance.columnName = this.columnName;
   }

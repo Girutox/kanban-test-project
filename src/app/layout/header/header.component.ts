@@ -66,7 +66,7 @@ export class HeaderComponent {
   }
 
   onAddNewTask() {
-    const modalRef = this.modalService.open(ManageTaskComponent);
+    const modalRef = this.modalService.open(ManageTaskComponent, { centered: true });
     modalRef.componentInstance.isNew = signal(true);
     modalRef.componentInstance.task = signal<Task>({id: 0, title: '', description: '', subtasks: [], status: ''});
   }
@@ -74,7 +74,7 @@ export class HeaderComponent {
   onEditBoard() {
     this.showFloatingCard.set(false);
 
-    const modalRef = this.modalService.open(ManageBoardComponent);
+    const modalRef = this.modalService.open(ManageBoardComponent, { centered: true });
     modalRef.componentInstance.isNew = signal(false);
     modalRef.componentInstance.id = this.activeBoardId;
   }
@@ -82,7 +82,7 @@ export class HeaderComponent {
   onDeleteBoard() {
     this.showFloatingCard.set(false);
 
-    const modalRef = this.modalService.open(ConfirmationModalComponent);
+    const modalRef = this.modalService.open(ConfirmationModalComponent, { centered: true });
     modalRef.componentInstance.title = signal('Delete this board?');
     modalRef.componentInstance.message = signal(`Are you sure you want to delete the ‘${this.boardName()}’ board? This action will remove all columns and tasks and cannot be reversed.`);
     modalRef.componentInstance.data = signal(this.boardName());

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, effect, inject, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, TemplateRef } from '@angular/core';
 import { BoardService } from '../board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Column } from '../model/board.model';
@@ -45,7 +45,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  onAddNewColumn(manageBoardModal: TemplateRef<any>) {
-    this.modalService.open(manageBoardModal);
+  onAddNewColumn() {
+    const modalRef = this.modalService.open(ManageBoardComponent, { centered: true });
+    modalRef.componentInstance.isNew = signal(false);
+    modalRef.componentInstance.id = this.boardId;
   }
 }

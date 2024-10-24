@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, TemplateRef, viewChild } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { ManageBoardComponent } from "../../manage-board/manage-board.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../../../board.service';
@@ -17,17 +17,18 @@ import { BoardService } from '../../../board.service';
 export class BoardEmptyColumnComponent {
   isNewColumn = input<boolean>(true);
   boardService = inject(BoardService);
+  modalService = inject(NgbModal);
+
   boardId = this.boardService.activeBoardId;
   boardColumns = computed(() => {
     return this.boardService.getBoardColumns(this.boardId());
   });
-  modalService = inject(NgbModal);
-
-  manageBoardModal = viewChild<TemplateRef<any>>('manageBoardModal');
 
   onClick() {
     if (this.isNewColumn()) {
-      this.modalService.open(this.manageBoardModal());
+      const modalRef = this.modalService.open(ManageBoardComponent, { centered: true });
+      modalRef.componentInstance.isNew = signal(false);
+      modalRef.componentInstance.id = this.boardId;      
     }
   }
 }

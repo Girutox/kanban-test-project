@@ -79,7 +79,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
     this.showFloatingCard.set(false);
     this.modalService.dismissAll();
 
-    const modalRef = this.modalService.open(ManageTaskComponent);
+    const modalRef = this.modalService.open(ManageTaskComponent, { centered: true });
     modalRef.componentInstance.isNew = signal(false);
     modalRef.componentInstance.task = this.task;
     modalRef.componentInstance.columnName = this.columnName;
@@ -89,7 +89,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
     this.showFloatingCard.set(false);
     this.modalService.dismissAll();
 
-    const modalRef = this.modalService.open(ConfirmationModalComponent);
+    const modalRef = this.modalService.open(ConfirmationModalComponent, { centered: true });
     modalRef.componentInstance.title = signal('Delete this task?');
     modalRef.componentInstance.message = signal(`Are you sure you want to delete the ‘${this.task().title}’ task and its subtasks? This action cannot be reversed.`);
     modalRef.componentInstance.data = signal(this.task().title);

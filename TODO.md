@@ -12,7 +12,7 @@
 - [x] Complete View Task.
 - [x] Complete Manage Task.
 - [x] Complete Menu Dropdown functionality.
-- [] Add menu dropdown for EDIT and DELETE TASK.
+- [x] Add menu dropdown for EDIT and DELETE TASK.
 - [] Align MODAL OPEN with component approach (?)
 
 ## Known Bugs
