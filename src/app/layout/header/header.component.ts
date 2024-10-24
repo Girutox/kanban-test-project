@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, input, Renderer2, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
 import { BoardService } from '../../board.service';
 import { IconVerticalEllipsisComponent } from "../../UI/SVG/icon-vertical-ellipsis/icon-vertical-ellipsis.component";
@@ -31,8 +31,6 @@ export class HeaderComponent {
   boardService = inject(BoardService);
   router = inject(Router);
   modalService = inject(NgbModal);
-  elRef = inject(ElementRef);
-  renderer = inject(Renderer2);
 
   sidebarHidden = input<boolean>(false);
   showFloatingCard = signal(false);
@@ -44,18 +42,6 @@ export class HeaderComponent {
   isBoardEmpty = computed(() => {    
     return (this.activeBoardId()) ? this.boardService.getBoardColumns(this.activeBoardId()).length == 0 : true;
   });
-
-  private clickListener: () => void;
-
-  constructor() {
-    this.clickListener = this.renderer.listen('document', 'click', this.onDocumentClick.bind(this));
-  }
-  
-  onDocumentClick(event: Event) {
-    if (!this.elRef.nativeElement.contains(event.target)) {
-      this.showFloatingCard.set(false);
-    }
-  }
 
   onLogoClick() {
     this.router.navigate(['/']);
@@ -89,5 +75,9 @@ export class HeaderComponent {
     modalRef.componentInstance.confirmedAction = signal(() => {
       this.boardService.deleteActiveBoard();
     });
+  }
+
+  onHideCard() {    
+    this.showFloatingCard.set(false);
   }
 }

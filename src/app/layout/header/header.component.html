@@ -14,7 +14,7 @@
         <app-icon-vertical-ellipsis />
       </div>
       @if (showFloatingCard()) {
-      <app-floating-card>
+      <app-floating-card (hideCard)="onHideCard()">
         <ul class="floating-card-list">
           <li>
             <button (click)="onEditBoard()">Edit Board</button>

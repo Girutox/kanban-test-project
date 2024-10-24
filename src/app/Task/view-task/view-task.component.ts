@@ -103,4 +103,8 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
       this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.controls.subtasks.value, this.form.controls.status.value ?? '');
     }
   }
+
+  onHideCard() {    
+    this.showFloatingCard.set(false);
+  }
 }
