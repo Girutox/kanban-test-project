@@ -12,11 +12,14 @@ import { ManageBoardComponent } from '../../board/manage-board/manage-board.comp
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
 import { ScreenSizeService } from '../../screen-size.service';
 import { IconAddTaskMobileComponent } from "../../UI/SVG/icon-add-task-mobile/icon-add-task-mobile.component";
+import { IconChevronDownComponent } from "../../UI/SVG/icon-chevron-down/icon-chevron-down.component";
+import { IconChevronUpComponent } from "../../UI/SVG/icon-chevron-up/icon-chevron-up.component";
+import { SidebarModalComponent } from './sidebar-modal/sidebar-modal.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent, ManageTaskComponent, ManageBoardComponent, IconAddTaskMobileComponent],
+  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent, ManageTaskComponent, ManageBoardComponent, IconAddTaskMobileComponent, IconChevronDownComponent, IconChevronUpComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   animations: [
@@ -47,9 +50,10 @@ export class HeaderComponent implements OnInit {
   });
 
   isMobileMediumSize = signal(false);
+  isChevronDownVisible = signal(true);
 
   ngOnInit(): void {
-    this.screenSizeService.resized$.subscribe(sizes => {
+    this.screenSizeService.resized$.subscribe(sizes => {      
       this.isMobileMediumSize.set(sizes.width <= this.screenSizeService.mobileMediumSize);
     });
   }
@@ -90,5 +94,20 @@ export class HeaderComponent implements OnInit {
 
   onHideCard() {
     this.showFloatingCard.set(false);
+  }
+
+  onChevronClick() {
+    this.isChevronDownVisible.set(!this.isChevronDownVisible());
+    this.modalService.dismissAll();
+
+    if (!this.isChevronDownVisible()) {
+      this.modalService.open(SidebarModalComponent, { 
+        modalDialogClass: 'sidebar-modal',
+        beforeDismiss: () => {
+          this.isChevronDownVisible.set(true);
+          return true;
+        }
+      });      
+    }
   }
 }

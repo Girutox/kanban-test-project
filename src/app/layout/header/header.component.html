@@ -1,20 +1,34 @@
 @if (sidebarHidden() || isMobileMediumSize()) {
 <div class="logo" @fadeInOut (click)="onLogoClick()">
   @if (!isMobileMediumSize()) {
-    <img src="assets/logo-dark.svg" alt="Kanban logo">
+  <img src="assets/logo-dark.svg" alt="Kanban logo">
   } @else {
-    <img src="assets/logo-mobile.svg" alt="Kanban logo">
+  <img src="assets/logo-mobile.svg" alt="Kanban logo">
   }
 </div>
 }
 <section class="title-section">
-  <h1>{{boardName()}}</h1>
+  <div class="title-search-group">
+    @if (isMobileMediumSize()) {
+      @if (boardName() == '') {
+        <h1 class="choose-board-mobile">[Choose a board]</h1>
+      } @else {
+        <h1>{{boardName()}}</h1>
+      }
+
+      @if (isChevronDownVisible()) {
+      <app-icon-chevron-down (customClick)="onChevronClick()" />
+      } @else {
+      <app-icon-chevron-up (customClick)="onChevronClick()" />
+      }
+    } 
+  </div>
   <div class="last-section">
     <app-custom-button mode="primary" buttonSize="large" [disabled]="isBoardEmpty()" (customClick)="onAddNewTask()">
       @if (!isMobileMediumSize()) {
-        + Add New Task
+      + Add New Task
       } @else {
-       <app-icon-add-task-mobile /> 
+      <app-icon-add-task-mobile />
       }
     </app-custom-button>
     <div class="menu-ellipsis">

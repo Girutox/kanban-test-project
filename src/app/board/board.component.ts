@@ -34,10 +34,11 @@ export class BoardComponent implements OnInit {
     this.activatedRoute.params.subscribe({
       next: (params) => {
         if (params['id']) {          
-          this.boardId.set(params['id']);
+          this.boardId.set(params['id']);          
 
           // Redirect to home if board does not exist
           if (!this.boardService.boardExists(this.boardId())) {
+            console.log(this.boardId());
             this.router.navigate(['/']);
           }
         }

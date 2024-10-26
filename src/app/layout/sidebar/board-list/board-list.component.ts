@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { BoardService } from '../../../board.service';
 import { BoardListItemComponent } from './board-list-item/board-list-item.component';
 import { ManageBoardComponent } from "../../../board/manage-board/manage-board.component";
@@ -18,7 +18,10 @@ export class BoardListComponent {
 
   boards = this.boardService.allBoards;
 
-  onCreateNewBoard(manageBoardModal: TemplateRef<any>) {
-    this.modalService.open(manageBoardModal);
+  onCreateNewBoard() {
+    this.modalService.dismissAll();
+    const modalRef = this.modalService.open(ManageBoardComponent, { centered: true });
+    modalRef.componentInstance.isNew = signal(true);
+    modalRef.componentInstance.id = signal<number | null>(null);
   }
 }

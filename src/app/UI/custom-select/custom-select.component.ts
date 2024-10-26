@@ -1,10 +1,11 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IconChevronDownComponent } from "../SVG/icon-chevron-down/icon-chevron-down.component";
 
 @Component({
   selector: 'app-custom-select',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, IconChevronDownComponent],
   templateUrl: './custom-select.component.html',
   styleUrl: './custom-select.component.scss'
 })

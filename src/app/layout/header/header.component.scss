@@ -20,10 +20,6 @@
 
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba($main-purple, 0.1);
-  }
-
   @media (max-width: $mobile-m-size) {
     border-right: none;
     padding: 0 5px 0 15px;
@@ -41,9 +37,31 @@
 
   @media (max-width: $mobile-m-size) {
     padding: 25px 25px 25px 10px;
+  }
+
+  .title-search-group {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
 
     h1 {
-      @include heading-l;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: $mobile-m-size) {  
+      h1 {
+        @include heading-l;
+        max-width: 200px;
+      }
+    }
+
+    .choose-board-mobile {
+      @include heading-m;
+      color: $medium-grey !important;
     }
   }
 }
@@ -51,7 +69,7 @@
 .last-section {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
 
   .menu-ellipsis {
     position: relative;
