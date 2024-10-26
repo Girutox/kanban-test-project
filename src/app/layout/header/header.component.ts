@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
 import { BoardService } from '../../board.service';
 import { IconVerticalEllipsisComponent } from "../../UI/SVG/icon-vertical-ellipsis/icon-vertical-ellipsis.component";
@@ -10,11 +10,13 @@ import { ManageTaskComponent } from '../../Task/manage-task/manage-task.componen
 import { Task } from '../../model/board.model';
 import { ManageBoardComponent } from '../../board/manage-board/manage-board.component';
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
+import { ScreenSizeService } from '../../screen-size.service';
+import { IconAddTaskMobileComponent } from "../../UI/SVG/icon-add-task-mobile/icon-add-task-mobile.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent, ManageTaskComponent, ManageBoardComponent],
+  imports: [CustomButtonComponent, IconVerticalEllipsisComponent, FloatingCardComponent, ManageTaskComponent, ManageBoardComponent, IconAddTaskMobileComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   animations: [
@@ -27,8 +29,9 @@ import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirma
     ])
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   boardService = inject(BoardService);
+  screenSizeService = inject(ScreenSizeService);
   router = inject(Router);
   modalService = inject(NgbModal);
 
@@ -39,9 +42,17 @@ export class HeaderComponent {
   boardName = computed(() => {
     return this.activeBoardId() ? this.boardService.getBoardName(this.activeBoardId()) : '';
   });
-  isBoardEmpty = computed(() => {    
+  isBoardEmpty = computed(() => {
     return (this.activeBoardId()) ? this.boardService.getBoardColumns(this.activeBoardId()).length == 0 : true;
   });
+
+  isMobileMediumSize = signal(false);
+
+  ngOnInit(): void {
+    this.screenSizeService.resized$.subscribe(sizes => {
+      this.isMobileMediumSize.set(sizes.width <= this.screenSizeService.mobileMediumSize);
+    });
+  }
 
   onLogoClick() {
     this.router.navigate(['/']);
@@ -54,7 +65,7 @@ export class HeaderComponent {
   onAddNewTask() {
     const modalRef = this.modalService.open(ManageTaskComponent, { centered: true });
     modalRef.componentInstance.isNew = signal(true);
-    modalRef.componentInstance.task = signal<Task>({id: 0, title: '', description: '', subtasks: [], status: ''});
+    modalRef.componentInstance.task = signal<Task>({ id: 0, title: '', description: '', subtasks: [], status: '' });
   }
 
   onEditBoard() {
@@ -77,7 +88,7 @@ export class HeaderComponent {
     });
   }
 
-  onHideCard() {    
+  onHideCard() {
     this.showFloatingCard.set(false);
   }
 }

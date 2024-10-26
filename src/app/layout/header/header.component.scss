@@ -23,6 +23,11 @@
   &:hover {
     background-color: rgba($main-purple, 0.1);
   }
+
+  @media (max-width: $mobile-m-size) {
+    border-right: none;
+    padding: 0 5px 0 15px;
+  }
 }
 
 .title-section {
@@ -33,6 +38,14 @@
   align-items: center;
 
   padding: 25px 25px;
+
+  @media (max-width: $mobile-m-size) {
+    padding: 25px 25px 25px 10px;
+
+    h1 {
+      @include heading-l;
+    }
+  }
 }
 
 .last-section {

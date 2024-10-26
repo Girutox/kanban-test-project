@@ -11,6 +11,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @media (max-width: $mobile-m-size) { 
+    display: none;
+  }
 }
 
 .logo {

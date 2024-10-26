@@ -1,13 +1,21 @@
-@if (sidebarHidden()) {
+@if (sidebarHidden() || isMobileMediumSize()) {
 <div class="logo" @fadeInOut (click)="onLogoClick()">
-  <img src="assets/logo-dark.svg" alt="Kanban logo">
+  @if (!isMobileMediumSize()) {
+    <img src="assets/logo-dark.svg" alt="Kanban logo">
+  } @else {
+    <img src="assets/logo-mobile.svg" alt="Kanban logo">
+  }
 </div>
 }
 <section class="title-section">
   <h1>{{boardName()}}</h1>
   <div class="last-section">
     <app-custom-button mode="primary" buttonSize="large" [disabled]="isBoardEmpty()" (customClick)="onAddNewTask()">
-      + Add New Task
+      @if (!isMobileMediumSize()) {
+        + Add New Task
+      } @else {
+       <app-icon-add-task-mobile /> 
+      }
     </app-custom-button>
     <div class="menu-ellipsis">
       <div class="pseudo-button" (click)="onToggleFloatingCard()">
