@@ -260,6 +260,7 @@ export class BoardService {
    * @param id - The ID of the board currently selected (route).
   */
   setActiveBoardId(id: number) {
+    this.activeBoardId.set(null);
     this.activeBoardId.set(id);
     window.localStorage.setItem('activeBoardId', id.toString());
   }
@@ -283,37 +284,39 @@ export class BoardService {
     this.boards().splice(boardIndex, 1);
     board.columns = [...board.columns];
 
-    const activeBoardColumn = board.columns.find(a => a.name == columnName)!;
-    const taskIndex = activeBoardColumn.tasks.findIndex(b => b.id == id)!;
-    let task = activeBoardColumn.tasks[taskIndex];
+    const activeBoardColumn = board.columns.find(a => a.name == columnName);
+    const taskIndex = activeBoardColumn?.tasks.findIndex(b => b.id == id)!;
+    let task = activeBoardColumn?.tasks[taskIndex];
 
-    if (columnName == status) {
-      if (task) {
+    if (task) {
+      if (columnName == status) {
         task.title = title == '' ? task.title : title;
         task.description = description == '' ? task.description : description;
         task.subtasks = subtasks;
         task.status = status;
       } else {
-        const newTaskId = activeBoardColumn.tasks.length > 0 ? Math.max(...activeBoardColumn.tasks.map(a => a.id)) + 1 : 1; // If no tasks, start with ID 1
-        task = {
-          id: newTaskId, // TO DO: Get max ID from all columns (TEMP until DB connection)
-          title,
-          description,
-          subtasks,
-          status,
-        };
-        activeBoardColumn.tasks.push(task);
+        const targetColumn = board.columns.find(a => a.name == status)!;
+        activeBoardColumn!.tasks.splice(taskIndex, 1);
+
+        targetColumn.tasks.push({
+          ...task,
+          title: title == '' ? task.title : title,
+          description: description == '' ? task.description : description,
+          subtasks: subtasks,
+          status: status
+        });
       }
     } else {
       const targetColumn = board.columns.find(a => a.name == status)!;
-      activeBoardColumn.tasks.splice(taskIndex, 1);
-      targetColumn.tasks.push({
-        ...task,
-        title: title == '' ? task.title : title,
-        description: description == '' ? task.description : description,
-        subtasks: subtasks,
-        status: status
-      });
+      const newTaskId = targetColumn.tasks.length > 0 ? Math.max(...targetColumn.tasks.map(a => a.id)) + 1 : 1; // If no tasks, start with ID 1
+      task = {
+        id: newTaskId, // TO DO: Get max ID from all columns (TEMP until DB connection)
+        title,
+        description,
+        subtasks,
+        status,
+      };
+      targetColumn.tasks.push(task);
     }
 
     this.boards.set([...this.boards(), board]);
@@ -345,7 +348,7 @@ export class BoardService {
 
     this.boards.set([...this.boards(), board]);
   }
-  
+
   /**
    * Generates a random hexadecimal color string.
    *

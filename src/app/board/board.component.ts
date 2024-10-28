@@ -38,7 +38,6 @@ export class BoardComponent implements OnInit {
 
           // Redirect to home if board does not exist
           if (!this.boardService.boardExists(this.boardId())) {
-            console.log(this.boardId());
             this.router.navigate(['/']);
           }
         }

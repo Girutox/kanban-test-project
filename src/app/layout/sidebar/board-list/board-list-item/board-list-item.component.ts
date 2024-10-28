@@ -21,7 +21,7 @@ export class BoardListItemComponent {
   boardName = input.required<string>();
   createMode = input<boolean>(false);
 
-  onItemClick() {
+  onItemClick() {    
     this.boardService.setActiveBoardId(this.boardId());
     this.router.navigate(['/board', this.boardId()]);
   }
