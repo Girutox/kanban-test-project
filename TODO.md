@@ -20,6 +20,8 @@
 - [] Better style custom select component (?)
 - [] Add CROSS icon for modals (?)
 
+- [] Add tests for all components.
+
 ## Known Bugs
 
 - [x] When refreshing page, values are not being reset.
