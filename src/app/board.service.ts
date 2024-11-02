@@ -25,7 +25,7 @@ export class BoardService {
             {
               "id": 1,
               "title": "Plan Product Hunt launch",
-              "description": "",
+              "description": "We're planning to launch on Product Hunt in 2 weeks. We need to get everything ready for the launch, including the product page, assets, and network notifications.",
               "status": "Todo",
               "subtasks": [
                 {
@@ -57,7 +57,7 @@ export class BoardService {
             {
               "id": 2,
               "title": "Share on Show HN",
-              "description": "",
+              "description": "We're planning to share our product on Show HN to get feedback from the community. We need to draft out the post, get feedback, and publish the post.",
               "status": "Todo",
               "subtasks": [
                 {
@@ -77,7 +77,7 @@ export class BoardService {
             {
               "id": 3,
               "title": "Write launch article to publish on multiple channels",
-              "description": "",
+              "description": "We're planning to write an article about our launch and publish it on multiple channels to get the word out. We need to draft the article and publish it on LinkedIn, Indie Hackers, and Medium.",
               "status": "Todo",
               "subtasks": [
                 {
@@ -123,7 +123,7 @@ export class BoardService {
             {
               "id": 4,
               "title": "Launch version one",
-              "description": "",
+              "description": "We're planning to launch version one of our product in 2 weeks. We need to get everything ready for the launch, including the product page, assets, and network notifications.",
               "status": "Now",
               "subtasks": [
                 {

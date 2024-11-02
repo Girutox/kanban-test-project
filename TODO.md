@@ -28,6 +28,6 @@
 - [x] Tabbing out from COLUMNS or SUBTASKS dynamic inputs (form array) is focusing on X button instead of next row.
 - [x] Fix title of modal component leaving card component on overflow.
 - [x] Fix menu dropdown not dissapearing in view task component.
-- [] In mobile/small size, fix sidebar show state being kept alive.
-- [] Error when trying to add a task (columnName is empty).
+- [x] In mobile/small size, fix sidebar show state being kept alive.
+- [x] Error when trying to add a task (columnName is empty).
 - [] Board list component overflows when board name is too big.

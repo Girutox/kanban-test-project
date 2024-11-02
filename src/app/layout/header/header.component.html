@@ -10,18 +10,16 @@
 <section class="title-section">
   <div class="title-search-group">
     @if (boardName() == '') {
-      @if (isMobileMediumSize()) {
-        <h1 class="choose-board-mobile">[Choose a board]</h1>
-      }
+      <h1 class="choose-board-mobile">{{ isMobileMediumSize() ? '[Choose a board]' : ''}}</h1>
     } @else {
       <h1>{{boardName()}}</h1>
+    }
 
-      @if (isMobileMediumSize()) {
-        @if (isChevronDownVisible()) {
-          <app-icon-chevron-down (customClick)="onChevronClick()" />
-        } @else {
-          <app-icon-chevron-up (customClick)="onChevronClick()" />
-        }
+    @if (isMobileMediumSize()) {     
+      @if (isChevronDownVisible()) {
+        <app-icon-chevron-down (customClick)="onChevronClick()" />
+      } @else {
+        <app-icon-chevron-up (customClick)="onChevronClick()" />
       }
     }
   </div>
