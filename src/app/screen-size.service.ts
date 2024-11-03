@@ -8,7 +8,7 @@ export class ScreenSizeService {
   private resized = new BehaviorSubject<{ width: number, height: number}>({ width: window.innerWidth, height: window.innerHeight});
   
   resized$ = this.resized.asObservable();
-  mobileMediumSize = 375;
+  mobileMediumSize = 750;
 
   constructor() {
     this.getScreenSize();

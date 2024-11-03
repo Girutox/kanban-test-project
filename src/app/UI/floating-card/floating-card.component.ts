@@ -14,7 +14,7 @@ export class FloatingCardComponent implements OnDestroy {
   hideCard = output<void>();
   counter = signal(0);
   
-  private clickListener: () => void;
+  clickListener: () => void;
   
   constructor() {    
     this.clickListener = this.renderer.listen('document', 'click', this.onDocumentClick.bind(this));
