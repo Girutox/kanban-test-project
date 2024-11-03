@@ -1,7 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BoardService } from '../../board.service';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -11,7 +10,6 @@ import { BoardService } from '../../board.service';
   styleUrl: './confirmation-modal.component.scss'
 })
 export class ConfirmationModalComponent {
-  boardService = inject(BoardService);
   modalService = inject(NgbModal);
 
   title = input.required<string>();
@@ -28,7 +26,9 @@ export class ConfirmationModalComponent {
   }
 
   onDelete() {
-    this.confirmedAction()();
+    if (this.confirmedAction()) {
+      this.confirmedAction()();
+    }
     this.modalService.dismissAll();
   }
 
