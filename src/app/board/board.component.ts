@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal, TemplateRef } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { BoardService } from '../board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Column } from '../model/board.model';
@@ -28,7 +28,7 @@ export class BoardComponent implements OnInit {
   boardColumns = computed<Column[]>(() => {    
     return <Column[]>JSON.parse(JSON.stringify(this.boardService.getBoardColumns(this.boardId())));
   });
-  isSpecial = computed<boolean>(() => this.boardColumns.length > 0);
+  isSpecial = computed<boolean>(() => this.boardColumns().length > 0);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
