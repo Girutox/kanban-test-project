@@ -6,12 +6,12 @@
 </div>
 <div class="columns-container">
   @if (tasks()?.length === 0) {
-  <app-board-empty-column [isNewColumn]="false" />
+    <app-board-empty-column [isNewColumn]="false" />
   } @else if (status() == undefined) {
-  <app-board-empty-column [isNewColumn]="true" />
+    <app-board-empty-column [isNewColumn]="true" />
   } @else {
-  @for (task of tasks(); track $index) {
-  <app-board-task [task]="task" [columnName]="status()" />
-  }
+    @for (task of tasks(); track $index) {
+      <app-board-task [task]="task" [columnName]="status()" />
+    }
   }
 </div>
