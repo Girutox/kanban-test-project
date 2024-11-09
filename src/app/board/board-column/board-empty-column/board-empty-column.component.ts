@@ -6,7 +6,6 @@ import { BoardService } from '../../../board.service';
 @Component({
   selector: 'app-board-empty-column',
   standalone: true,
-  imports: [ManageBoardComponent],
   templateUrl: './board-empty-column.component.html',
   styleUrl: './board-empty-column.component.scss',
   host: {
