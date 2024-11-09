@@ -20,7 +20,6 @@ describe('BoardTaskComponent', () => {
 
     await TestBed.configureTestingModule({
       providers: [
-        { provide: NgbModal, useValue: jasmine.createSpyObj('NgbModal', ['open']) },
         { provide: NgbModal, useValue: modalServiceMock }
       ]
     }).compileComponents();
