@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BoardColumnComponent } from './board-column.component';
 import { BoardTaskComponent } from './board-task/board-task.component';
 import { BoardEmptyColumnComponent } from './board-empty-column/board-empty-column.component';
-import { ComponentRef, ElementRef } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 
 describe('BoardColumnComponent', () => {
   let component: BoardColumnComponent;

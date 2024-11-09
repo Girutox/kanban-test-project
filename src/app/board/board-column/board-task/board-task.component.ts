@@ -6,7 +6,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-board-task',
   standalone: true,
-  imports: [ViewTaskComponent],
   templateUrl: './board-task.component.html',
   styleUrl: './board-task.component.scss',
   host: {
