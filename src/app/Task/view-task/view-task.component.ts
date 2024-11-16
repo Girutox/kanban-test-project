@@ -19,7 +19,7 @@ export interface SubtaskForm {
 @Component({
   selector: 'app-view-task',
   standalone: true,
-  imports: [CustomButtonComponent, CommonModule, CustomSelectComponent, ReactiveFormsModule, IconVerticalEllipsisComponent, FloatingCardComponent],
+  imports: [CommonModule, CustomSelectComponent, ReactiveFormsModule, IconVerticalEllipsisComponent, FloatingCardComponent],
   templateUrl: './view-task.component.html',
   styleUrl: './view-task.component.scss'
 })
