@@ -4,7 +4,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { BoardListComponent } from './board-list/board-list.component';
 import { IconHideSidebarComponent } from "../../UI/SVG/icon-hide-sidebar/icon-hide-sidebar.component";
 import { Router } from '@angular/router';
-import { ScreenSizeService } from '../../screen-size.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,7 +29,6 @@ import { ScreenSizeService } from '../../screen-size.service';
 })
 export class SidebarComponent {  
   router = inject(Router);
-  screenSizeService = inject(ScreenSizeService);
 
   hideSidebar = output<boolean>();
 

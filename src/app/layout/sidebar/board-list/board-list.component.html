@@ -7,8 +7,3 @@
 <ul>
   <app-board-list-item boardName="+ Create New Board" [createMode]="true" (createNewBoard)="onCreateNewBoard()" />
 </ul>
-
-<!-- Modal template for managing the complete board -->
-<ng-template #manageBoardModal let-manageBoardModal>
-  <app-manage-board [isNew]="true" />
-</ng-template>

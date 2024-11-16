@@ -11,17 +11,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
-  let screenSizeService: ScreenSizeService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, BoardListComponent, IconHideSidebarComponent, BrowserAnimationsModule],
-      providers: [ScreenSizeService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;
-    screenSizeService = TestBed.inject(ScreenSizeService);
     fixture.detectChanges();
   });
 

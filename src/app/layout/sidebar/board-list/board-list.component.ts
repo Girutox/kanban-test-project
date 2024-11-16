@@ -8,7 +8,7 @@ import { OrderByPipe } from "../../../UI/pipes/order-by.pipe";
 @Component({
   selector: 'app-board-list',
   standalone: true,
-  imports: [BoardListItemComponent, ManageBoardComponent, OrderByPipe],
+  imports: [BoardListItemComponent, OrderByPipe],
   templateUrl: './board-list.component.html',
   styleUrl: './board-list.component.scss'
 })
