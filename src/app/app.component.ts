@@ -17,7 +17,7 @@ export class AppComponent {
   screenSizeService = inject(ScreenSizeService);
   isMobileMediumSize = signal(false);
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.screenSizeService.resized$.subscribe(sizes => {      
       this.isMobileMediumSize.set(sizes.width <= this.screenSizeService.mobileMediumSize);
     });
