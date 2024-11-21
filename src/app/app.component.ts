@@ -4,6 +4,8 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HeaderComponent } from "./layout/header/header.component";
 import { ShowSidebarComponent } from './layout/sidebar/show-sidebar/show-sidebar.component';
 import { ScreenSizeService } from './screen-size.service';
+import { BoardService } from './board.service';
+import { LoaderService } from './loader.service';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +15,33 @@ import { ScreenSizeService } from './screen-size.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  hideSidebar = false;
   screenSizeService = inject(ScreenSizeService);
+  boardService = inject(BoardService);
+  loaderService = inject(LoaderService);
+
+  hideSidebar = false;
   isMobileMediumSize = signal(false);
 
-  ngOnInit(): void {    
-    this.screenSizeService.resized$.subscribe(sizes => {      
+  ngOnInit(): void {
+    this.screenSizeService.resized$.subscribe(sizes => {
       this.isMobileMediumSize.set(sizes.width <= this.screenSizeService.mobileMediumSize);
+    });
+
+    this.loaderService.start();
+    this.boardService.setBoardFullData().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.loaderService.stop();
+      },
+      error: (error) => {
+        console.error(error);
+        this.loaderService.stop();
+      }
     });
   }
 
   onHideSidebar() {
-    this.hideSidebar = true;    
+    this.hideSidebar = true;
   }
 
   onShowSidebar() {
