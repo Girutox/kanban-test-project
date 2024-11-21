@@ -336,6 +336,15 @@ export class BoardService {
     this.router.navigate(['/']);
   }
 
+  /**
+   * Deletes the specified task from the specified column.
+   *
+   * This function finds the index of the specified task in the specified column, removes
+   * it from the column, and then updates the list of boards with the modified column.
+   *
+   * @param columnName - The name of the column from which to delete the task.
+   * @param id - The ID of the task to delete.
+   */
   deleteTask(columnName: string, id: number) {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
     const board = { ...this.boards()[boardIndex] };
