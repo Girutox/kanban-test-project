@@ -4,6 +4,7 @@ import { ScreenSizeService } from './screen-size.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DestroyRef } from '@angular/core';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppComponent', () => {
   let screenSizeService: ScreenSizeService;
@@ -15,7 +16,7 @@ describe('AppComponent', () => {
     screenSizeService.mobileMediumSize = 750;
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, BrowserAnimationsModule],
+      imports: [AppComponent, BrowserAnimationsModule, HttpClientModule],
       providers: [
         { provide: ScreenSizeService, useValue: screenSizeService }
       ]

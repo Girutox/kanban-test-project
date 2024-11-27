@@ -3,6 +3,7 @@ import { BoardColumnComponent } from './board-column.component';
 import { BoardTaskComponent } from './board-task/board-task.component';
 import { BoardEmptyColumnComponent } from './board-empty-column/board-empty-column.component';
 import { ComponentRef } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('BoardColumnComponent', () => {
   let component: BoardColumnComponent;
@@ -11,7 +12,7 @@ describe('BoardColumnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BoardTaskComponent, BoardEmptyColumnComponent],
+      imports: [BoardTaskComponent, BoardEmptyColumnComponent, HttpClientModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BoardColumnComponent);

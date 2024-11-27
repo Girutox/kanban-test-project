@@ -12,6 +12,7 @@
 - [x] Complete View Task.
 - [x] Complete Manage Task.
 - [x] Complete Menu Dropdown functionality.
+
 - [x] Add menu dropdown for EDIT and DELETE TASK.
 - [x] Align MODAL OPEN with component approach.
 - [x] Apply styles for TABLE size.

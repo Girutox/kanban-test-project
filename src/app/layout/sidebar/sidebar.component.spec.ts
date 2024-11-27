@@ -1,12 +1,11 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent } from './sidebar.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ScreenSizeService } from '../../screen-size.service';
 import { BoardListComponent } from './board-list/board-list.component';
 import { IconHideSidebarComponent } from "../../UI/SVG/icon-hide-sidebar/icon-hide-sidebar.component";
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -14,7 +13,7 @@ describe('SidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, BoardListComponent, IconHideSidebarComponent, BrowserAnimationsModule],
+      imports: [BoardListComponent, IconHideSidebarComponent, BrowserAnimationsModule, HttpClientModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarComponent);

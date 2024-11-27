@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarModalComponent } from './sidebar-modal.component';
 import { BoardListComponent } from "../../sidebar/board-list/board-list.component";
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SidebarModalComponent', () => {
   let component: SidebarModalComponent;
@@ -8,7 +9,7 @@ describe('SidebarModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BoardListComponent]
+      imports: [BoardListComponent, HttpClientModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidebarModalComponent);
