@@ -125,4 +125,8 @@ export class HeaderComponent implements OnInit {
       });      
     }
   }
+
+  onTestFirebase() {
+    this.boardService.testFireBase();
+  }
 }

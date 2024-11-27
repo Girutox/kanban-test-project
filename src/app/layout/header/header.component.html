@@ -24,6 +24,9 @@
     }
   </div>
   <div class="last-section">
+    <!-- <app-custom-button mode="secondary" buttonSize="large" (customClick)="onTestFirebase()">
+      Test Firebase
+    </app-custom-button> -->
     <app-custom-button mode="primary" buttonSize="large" [disabled]="isBoardEmpty()" (customClick)="onAddNewTask()">
       @if (!isMobileMediumSize()) {
       + Add New Task
