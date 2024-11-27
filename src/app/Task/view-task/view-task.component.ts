@@ -1,5 +1,4 @@
 import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
-import { CustomButtonComponent } from "../../UI/custom-button/custom-button.component";
 import { Subtask, Task } from '../../model/board.model';
 import { CommonModule } from '@angular/common';
 import { CustomSelectComponent } from '../../UI/custom-select/custom-select.component';
@@ -10,6 +9,8 @@ import { FloatingCardComponent } from "../../UI/floating-card/floating-card.comp
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ManageTaskComponent } from '../manage-task/manage-task.component';
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
+import { LoaderService } from '../../loader.service';
+import { switchMap } from 'rxjs';
 
 export interface SubtaskForm {
   title: FormControl<string>;
@@ -26,9 +27,10 @@ export interface SubtaskForm {
 export class ViewTaskComponent implements OnInit, OnDestroy {
   boardService = inject(BoardService);
   modalService = inject(NgbModal);
+  loaderService = inject(LoaderService);
 
   formChanged = false;
-  
+
   task = input.required<Task>();
   columnName = input<string>();
 
@@ -39,11 +41,11 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
     status: new FormControl('')
   })
 
-  get getSubtasksControls() {    
+  get getSubtasksControls() {
     return this.form.controls.subtasks.controls;
   }
 
-  get getCompletedSubtaskCount() {    
+  get getCompletedSubtaskCount() {
     return this.form.controls.subtasks.value.filter(a => a.isCompleted).length;
   }
 
@@ -54,11 +56,11 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
         isCompleted: new FormControl(a.isCompleted, Validators.required)
       }));
     });
-    this.form.controls.status.setValue(this.task().status);    
+    this.form.controls.status.setValue(this.task().status);
   }
 
   onControlChange() {
-    this.formChanged = true;    
+    this.formChanged = true;
   }
 
   getStatusOptions() {
@@ -94,17 +96,38 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.message = signal(`Are you sure you want to delete the ‘${this.task().title}’ task and its subtasks? This action cannot be reversed.`);
     modalRef.componentInstance.data = signal(this.task().title);
     modalRef.componentInstance.confirmedAction = signal(() => {
-      this.boardService.deleteTask(this.columnName() ?? '', this.task().id);
+      this.loaderService.start();
+      this.boardService.deleteTask(this.columnName() ?? '', this.task().id).pipe(
+        switchMap(() => this.boardService.setBoardFullData())
+      ).subscribe({
+        next: () => {
+          this.loaderService.stop();
+        },
+        error: (err) => {
+          this.loaderService.stop();
+        }
+      }
+      );
     });
   }
 
   ngOnDestroy(): void {
-    if (this.formChanged) {      
-      this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.controls.subtasks.value, this.form.controls.status.value ?? '');
+    if (this.formChanged) {
+      this.loaderService.start();
+      this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.controls.subtasks.value, this.form.controls.status.value ?? '').pipe(
+        switchMap(() => this.boardService.setBoardFullData())
+      ).subscribe({
+        next: () => {
+          this.loaderService.stop();
+        },
+        error: (err) => {
+          this.loaderService.stop();
+        }
+      });
     }
   }
 
-  onHideCard() {    
+  onHideCard() {
     this.showFloatingCard.set(false);
   }
 }

@@ -30,11 +30,9 @@ export class AppComponent {
     this.loaderService.start();
     this.boardService.setBoardFullData().subscribe({
       next: (response) => {
-        console.log(response);
         this.loaderService.stop();
       },
       error: (error) => {
-        console.error(error);
         this.loaderService.stop();
       }
     });

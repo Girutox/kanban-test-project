@@ -6,6 +6,8 @@ import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component
 import { CommonModule } from '@angular/common';
 import { BoardService } from '../../board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderService } from '../../loader.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-manage-board',
@@ -17,6 +19,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageBoardComponent implements OnInit {
   boardService = inject(BoardService);
   modalService = inject(NgbModal);
+  loaderService = inject(LoaderService);
 
   isNew = input.required<boolean>();
   id = input<number | null>(null);
@@ -68,7 +71,18 @@ export class ManageBoardComponent implements OnInit {
       return;
     }
 
-    this.boardService.saveBoard(this.id(), this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []);
-    this.modalService.dismissAll();
+    this.loaderService.start();
+    this.boardService.saveBoard(this.id(), this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []).pipe(
+      switchMap(() => this.boardService.setBoardFullData())
+    ).subscribe({
+      next: () => {     
+        this.modalService.dismissAll();
+        this.loaderService.stop();
+      },
+      error: (err) => {
+        this.modalService.dismissAll();
+        this.loaderService.stop();
+      }
+    });    
   }
 }

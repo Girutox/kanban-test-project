@@ -38,6 +38,8 @@ main {
     @include heading-l;
     color: $white;
   }
+
+  z-index: 1099;
 }
 
 .loader {

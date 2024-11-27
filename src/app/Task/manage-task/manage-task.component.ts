@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { CustomButtonComponent } from '../../UI/custom-button/custom-button.component';
 import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderService } from '../../loader.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-manage-task',
@@ -19,6 +21,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageTaskComponent {
   boardService = inject(BoardService);
   modalService = inject(NgbModal);
+  loaderService = inject(LoaderService);
   
   isNew = input.required<boolean>();
   task = input.required<Task>();
@@ -70,7 +73,18 @@ export class ManageTaskComponent {
       return;
     }    
 
-    this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.value.subtasks, this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '');
-    this.modalService.dismissAll();
+    this.loaderService.start();
+    this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.value.subtasks, this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '').pipe(
+      switchMap(() => this.boardService.setBoardFullData())
+    ).subscribe({
+      next: () => {        
+        this.modalService.dismissAll();
+        this.loaderService.stop();
+      },
+      error: (err) => {
+        this.modalService.dismissAll();
+        this.loaderService.stop();
+      }
+    });
   }
 }

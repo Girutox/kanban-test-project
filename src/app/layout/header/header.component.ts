@@ -15,6 +15,8 @@ import { IconAddTaskMobileComponent } from "../../UI/SVG/icon-add-task-mobile/ic
 import { IconChevronDownComponent } from "../../UI/SVG/icon-chevron-down/icon-chevron-down.component";
 import { IconChevronUpComponent } from "../../UI/SVG/icon-chevron-up/icon-chevron-up.component";
 import { SidebarModalComponent } from './sidebar-modal/sidebar-modal.component';
+import { LoaderService } from '../../loader.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -37,6 +39,7 @@ export class HeaderComponent implements OnInit {
   screenSizeService = inject(ScreenSizeService);
   router = inject(Router);
   modalService = inject(NgbModal);
+  loaderService = inject(LoaderService);
 
   sidebarHidden = input<boolean>(false);
   showFloatingCard = signal(false);
@@ -88,7 +91,19 @@ export class HeaderComponent implements OnInit {
     modalRef.componentInstance.message = signal(`Are you sure you want to delete the ‘${this.boardName()}’ board? This action will remove all columns and tasks and cannot be reversed.`);
     modalRef.componentInstance.data = signal(this.boardName());
     modalRef.componentInstance.confirmedAction = signal(() => {
-      this.boardService.deleteActiveBoard();
+      this.loaderService.start();
+      this.boardService.deleteActiveBoard().pipe(
+        switchMap(() => this.boardService.setBoardFullData())
+      ).subscribe({
+        next: (response) => {          
+          this.boardService.activeBoardId.set(null);
+          this.router.navigate(['/']);
+          this.loaderService.stop();
+        },
+        error: (err) => {
+          this.loaderService.stop();
+        }
+      });
     });
   }
 

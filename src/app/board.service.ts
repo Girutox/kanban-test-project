@@ -13,7 +13,7 @@ export class BoardService {
   http = inject(HttpClient);
 
   private boards = signal<Board[]>([]);
-  private fireBaseBoardUID = '-OCEKAY0pc1ULlP86hsd';
+  private fireBaseBoardUID = '';
   allBoards = this.boards.asReadonly();
 
   activeBoardId = signal<number | null>(null);
@@ -25,47 +25,11 @@ export class BoardService {
     }
   }
 
-  // testFireBase() {
-  //   this.http.post(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, this.boards()).subscribe({
-  //     next: (response) => {
-  //       console.log(response);
-  //     },
-  //     error: (error) => {
-  //       console.error(error);
-  //     }
-  //   });
-  // }
-
-  setBoardFullData() {
-    return this.http.get<{ [key: string]: Board[] }>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
-      tap((response) => {
-        const boards = response[this.fireBaseBoardUID];
-        boards.map((board) => {
-          if (!board.hasOwnProperty('columns')) {
-            board.columns = [];
-          } else {
-            board.columns.map((column) => {
-              if (!column.hasOwnProperty('tasks')) {
-                column.tasks = [];
-              } else {
-                column.tasks.map((task) => {
-                  if (!task.hasOwnProperty('subtasks')) {
-                    task.subtasks = [];
-                  }
-                });
-              }
-            });
-          }
-        });
-        this.boards.set(boards);
-      })
-    );
-  }
-
+  //#region Board Management (local)
   /**
-   * Obtains the stored columns/status for the specified board.
-   * @param id - The ID of the board to retrieve the columns.
-  */
+     * Obtains the stored columns/status for the specified board.
+     * @param id - The ID of the board to retrieve the columns.
+    */
   getBoardColumns(id: number | null) {
     const board = this.boards().filter(a => a.id == id);
     if (board.length == 0) {
@@ -97,6 +61,68 @@ export class BoardService {
   */
   boardExists(id: number) {
     return this.boards().some(a => a.id == id);
+  }
+
+  /**
+   * Stores/Updates the current selected board ID.
+   * @param id - The ID of the board currently selected (route).
+  */
+  setActiveBoardId(id: number) {
+    this.activeBoardId.set(null);
+    this.activeBoardId.set(id);
+    window.localStorage.setItem('activeBoardId', id.toString());
+  }
+
+  /**
+   * Generates a random hexadecimal color string.
+   *
+   * This function creates a random color by generating random values for the red, green,
+   * and blue components of the color, converting these values to hexadecimal, and then
+   * concatenating them into a single string prefixed with '#'.
+   *
+   * @returns {string} A random hexadecimal color string in the format '#RRGGBB'.
+   */
+  private getRandomHexColor(): string {
+    const getRandomValue = () => Math.floor(Math.random() * 256);
+    const toHex = (value: number) => value.toString(16).padStart(2, '0');
+
+    const red = getRandomValue();
+    const green = getRandomValue();
+    const blue = getRandomValue();
+
+    return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+  }
+  //#endregion
+
+  setBoardFullData() {
+    return this.http.get<{ [key: string]: Board[] }>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
+      tap((response) => {        
+        if (response) {
+          this.fireBaseBoardUID = Object.keys(response)[0];          
+          const boards = response[this.fireBaseBoardUID];
+          boards.map((board) => {
+            if (!board.hasOwnProperty('columns')) {
+              board.columns = [];
+            } else {
+              board.columns.map((column) => {
+                if (!column.hasOwnProperty('tasks')) {
+                  column.tasks = [];
+                } else {
+                  column.tasks.map((task) => {
+                    if (!task.hasOwnProperty('subtasks')) {
+                      task.subtasks = [];
+                    }
+                  });
+                }
+              });
+            }
+          });
+          this.boards.set(boards);
+        } else {
+          this.boards.set([]);
+        }        
+      })
+    );
   }
 
   /**
@@ -132,17 +158,11 @@ export class BoardService {
     }
     board.columns = columns;
 
-    this.boards.set([...this.boards(), board]);
-  }
-
-  /**
-   * Stores/Updates the current selected board ID.
-   * @param id - The ID of the board currently selected (route).
-  */
-  setActiveBoardId(id: number) {
-    this.activeBoardId.set(null);
-    this.activeBoardId.set(id);
-    window.localStorage.setItem('activeBoardId', id.toString());
+    if (this.fireBaseBoardUID == '') {
+      return this.http.post(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, [...this.boards(), board]);
+    } else {
+      return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
+    }
   }
 
   /**
@@ -199,7 +219,7 @@ export class BoardService {
       targetColumn.tasks.push(task);
     }
 
-    this.boards.set([...this.boards(), board]);
+    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
   }
 
   /**
@@ -210,10 +230,10 @@ export class BoardService {
    */
   deleteActiveBoard() {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
-    this.boards().splice(boardIndex, 1);
-    this.activeBoardId.set(null);
-
-    this.router.navigate(['/']);
+    const newBoard = [...this.boards()];
+    newBoard.splice(boardIndex, 1);
+    
+    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: newBoard });
   }
 
   /**
@@ -235,26 +255,6 @@ export class BoardService {
     const taskIndex = activeBoardColumn.tasks.findIndex(b => b.id == id)!;
     activeBoardColumn.tasks.splice(taskIndex, 1);
 
-    this.boards.set([...this.boards(), board]);
-  }
-
-  /**
-   * Generates a random hexadecimal color string.
-   *
-   * This function creates a random color by generating random values for the red, green,
-   * and blue components of the color, converting these values to hexadecimal, and then
-   * concatenating them into a single string prefixed with '#'.
-   *
-   * @returns {string} A random hexadecimal color string in the format '#RRGGBB'.
-   */
-  private getRandomHexColor(): string {
-    const getRandomValue = () => Math.floor(Math.random() * 256);
-    const toHex = (value: number) => value.toString(16).padStart(2, '0');
-
-    const red = getRandomValue();
-    const green = getRandomValue();
-    const blue = getRandomValue();
-
-    return `#${toHex(red)}${toHex(green)}${toHex(blue)}`;
+    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
   }
 }
