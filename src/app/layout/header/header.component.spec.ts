@@ -9,9 +9,12 @@ import { ManageTaskComponent } from '../../Task/manage-task/manage-task.componen
 import { ManageBoardComponent } from '../../board/manage-board/manage-board.component';
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentRef } from '@angular/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
+  let componentRef: ComponentRef<HeaderComponent>;
   let fixture: ComponentFixture<HeaderComponent>;
   let boardServiceMock: any;
   let screenSizeServiceMock: any;
@@ -44,7 +47,7 @@ describe('HeaderComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule],
+      imports: [BrowserAnimationsModule, HttpClientModule],
       providers: [
         { provide: BoardService, useValue: boardServiceMock },
         { provide: ScreenSizeService, useValue: screenSizeServiceMock },
@@ -57,6 +60,7 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    componentRef = fixture.componentRef;
     fixture.detectChanges();
   });
 
@@ -192,7 +196,20 @@ describe('HeaderComponent', () => {
     expect(compiled.querySelector('.logo')).toBeFalsy();
   });
 
+  it('should display the floating card section when activeBoardId is truthy and showFloatingCard is true', () => {
+    boardServiceMock.activeBoardId.and.returnValue(1);
+    component.showFloatingCard.set(true);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('.menu-ellipsis')).toBeTruthy();
+    expect(compiled.querySelector('app-floating-card')).toBeTruthy();
+    expect(compiled.querySelector('app-floating-card .floating-card-list')).toBeTruthy();
+    expect(compiled.querySelector('app-floating-card .floating-card-list .delete-option button')).toBeTruthy();
+    expect(compiled.querySelector('app-floating-card .floating-card-list button')).toBeTruthy();
+  });
+
   it('should display the floating card when showFloatingCard is true', () => {
+    boardServiceMock.activeBoardId.and.returnValue(1);
     component.showFloatingCard.set(true);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
@@ -207,6 +224,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should call onHideCard when hideCard event is emitted from floating card', () => {
+    boardServiceMock.activeBoardId.and.returnValue(1);
     component.showFloatingCard.set(true);
     fixture.detectChanges();
     spyOn(component, 'onHideCard');
@@ -216,6 +234,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should call onEditBoard when edit board button is clicked', () => {
+    boardServiceMock.activeBoardId.and.returnValue(1);
     component.showFloatingCard.set(true);
     fixture.detectChanges();
     spyOn(component, 'onEditBoard');
@@ -225,6 +244,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should call onDeleteBoard when delete board button is clicked', () => {
+    boardServiceMock.activeBoardId.and.returnValue(1);
     component.showFloatingCard.set(true);
     fixture.detectChanges();
     spyOn(component, 'onDeleteBoard');

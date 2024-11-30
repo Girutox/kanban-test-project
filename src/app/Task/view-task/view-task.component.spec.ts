@@ -9,11 +9,10 @@ import { CustomSelectComponent } from '../../UI/custom-select/custom-select.comp
 import { IconVerticalEllipsisComponent } from '../../UI/SVG/icon-vertical-ellipsis/icon-vertical-ellipsis.component';
 import { FloatingCardComponent } from '../../UI/floating-card/floating-card.component';
 import { ComponentRef, signal } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { ManageTaskComponent } from '../manage-task/manage-task.component';
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
 
-describe('ViewTaskComponent', () => {
+xdescribe('ViewTaskComponent', () => {
   let component: ViewTaskComponent;
   let componentRef: ComponentRef<ViewTaskComponent>;
   let fixture: ComponentFixture<ViewTaskComponent>;

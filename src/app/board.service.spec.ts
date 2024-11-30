@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { BoardService } from './board.service';
 import { Column, Subtask } from './model/board.model';
+import { HttpClient } from '@angular/common/http';
 
 xdescribe('BoardService', () => {
   let service: BoardService;
@@ -11,6 +12,7 @@ xdescribe('BoardService', () => {
     TestBed.configureTestingModule({
       providers: [
         BoardService,
+        HttpClient,
         { provide: Router, useValue: routerSpy }
       ]
     });
