@@ -11,16 +11,32 @@ import { FloatingCardComponent } from '../../UI/floating-card/floating-card.comp
 import { ComponentRef, signal } from '@angular/core';
 import { ManageTaskComponent } from '../manage-task/manage-task.component';
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
+import { worker } from '../../../mocks/browser';
+import { of } from 'rxjs';
+import { LoaderService } from '../../loader.service';
 
-xdescribe('ViewTaskComponent', () => {
+describe('ViewTaskComponent', () => {
   let component: ViewTaskComponent;
   let componentRef: ComponentRef<ViewTaskComponent>;
   let fixture: ComponentFixture<ViewTaskComponent>;
   let boardService: jasmine.SpyObj<BoardService>;
   let modalServiceMock: any;
+  let loaderService: jasmine.SpyObj<LoaderService>;
+
+  beforeAll(() => {
+    worker.start({
+      onUnhandledRequest: 'bypass'
+    });
+  });
 
   beforeEach(async () => {
-    const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoardColumns', 'activeBoardId', 'deleteTask', 'saveTask']);
+    const boardServiceSpy = jasmine.createSpyObj('BoardService', {
+      getBoardColumns: jasmine.createSpy('getBoardColumns'),
+      activeBoardId: jasmine.createSpy('activeBoardId'),
+      deleteTask: jasmine.createSpy('deleteTask').and.returnValue(of({})),
+      saveTask: jasmine.createSpy('saveTask').and.returnValue(of({})),
+      setBoardFullData: jasmine.createSpy('setBoardFullData').and.returnValue(of({}))
+    });
 
     modalServiceMock = {
       dismissAll: jasmine.createSpy('dismissAll'),
@@ -28,6 +44,8 @@ xdescribe('ViewTaskComponent', () => {
         componentInstance: {}
       })
     };
+
+    const loaderServiceSpy = jasmine.createSpyObj('LoaderService', ['start', 'stop']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -40,11 +58,13 @@ xdescribe('ViewTaskComponent', () => {
       ],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
-        { provide: NgbModal, useValue: modalServiceMock }
+        { provide: NgbModal, useValue: modalServiceMock },
+        { provide: LoaderService, useValue: loaderServiceSpy }
       ]
     }).compileComponents();
 
     boardService = TestBed.inject(BoardService) as jasmine.SpyObj<BoardService>;
+    loaderService = TestBed.inject(LoaderService) as jasmine.SpyObj<LoaderService>;
   });
 
   beforeEach(() => {
@@ -116,16 +136,24 @@ xdescribe('ViewTaskComponent', () => {
   it('should update subtask status on checkbox change', () => {
     fixture.detectChanges();
     const checkbox: HTMLInputElement = fixture.nativeElement.querySelector('.subtask-item-checkbox');
+
+    boardService.saveTask.and.returnValue(of({}));
+    boardService.setBoardFullData.and.returnValue(of({}));
     checkbox.click();
     fixture.detectChanges();
+    
     expect(component.form.get('subtasks')?.value[0].isCompleted).toBe(true);
   });
 
   it('should change the property isCompleted when the div is clicked', () => {
     fixture.detectChanges();
     const subtaskDiv: HTMLElement = fixture.nativeElement.querySelector('.subtask-item');
+
+    boardService.saveTask.and.returnValue(of({}));
+    boardService.setBoardFullData.and.returnValue(of({}));
     subtaskDiv.click();
     fixture.detectChanges();
+    
     expect(component.form.get('subtasks')?.value[0].isCompleted).toBe(true);
   });  
 

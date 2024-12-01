@@ -28,7 +28,6 @@ describe('ManageTaskComponent', () => {
   })
 
   beforeEach(async () => {
-    // const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoardColumns', 'activeBoardId', 'saveTask']);
     const boardServiceSpy = jasmine.createSpyObj('BoardService', {
       getBoardColumns: jasmine.createSpy('getBoardColumns'),
       activeBoardId: jasmine.createSpy('activeBoardId'),
