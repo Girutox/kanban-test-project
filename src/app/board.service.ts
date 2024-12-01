@@ -304,7 +304,7 @@ export class BoardService {
    * @param boardName - The name of the board to be managed.
    * @param columns - The columns data to be included in the board.
   */
-  saveBoard(id: number | null, name: string, columns: Column[]) {
+  saveBoard(id: number | null, name: string, columns: Column[]) {   
     let board: Board;
 
     // If board does not exist, create a new one

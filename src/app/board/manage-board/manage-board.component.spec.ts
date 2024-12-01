@@ -8,20 +8,31 @@ import { CustomButtonComponent } from '../../UI/custom-button/custom-button.comp
 import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component";
 import { ComponentRef } from '@angular/core';
 import { Board } from '../../model/board.model';
-import {worker} from '../../../mocks/browser'
+import { worker } from '../../../mocks/browser'
+import { LoaderService } from '../../loader.service';
+import { of, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-xdescribe('ManageBoardComponent', () => {
+describe('ManageBoardComponent', () => {
   let component: ManageBoardComponent;
   let componentRef: ComponentRef<ManageBoardComponent>;
   let fixture: ComponentFixture<ManageBoardComponent>;
   let boardService: jasmine.SpyObj<BoardService>;
   let modalService: jasmine.SpyObj<NgbModal>;
+  let loaderService: jasmine.SpyObj<LoaderService>;
 
   beforeEach(async () => {
-    worker.start();
-    
-    const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoard', 'saveBoard']);
+    worker.start({
+      onUnhandledRequest: 'bypass'
+    });
+
+    const boardServiceSpy = jasmine.createSpyObj('BoardService', {
+      getBoard: jasmine.createSpy('getBoard'),
+      saveBoard: jasmine.createSpy('saveBoard').and.returnValue(of({})),
+      setBoardFullData: jasmine.createSpy('setBoardFullData').and.returnValue(of({}))
+    });
     const modalServiceSpy = jasmine.createSpyObj('NgbModal', ['dismissAll']);
+    const loaderServiceSpy = jasmine.createSpyObj('LoaderService', ['start', 'stop']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -33,7 +44,8 @@ xdescribe('ManageBoardComponent', () => {
       ],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
-        { provide: NgbModal, useValue: modalServiceSpy }
+        { provide: NgbModal, useValue: modalServiceSpy },
+        { provide: LoaderService, useValue: loaderServiceSpy }
       ]
     }).compileComponents();
 
@@ -42,6 +54,7 @@ xdescribe('ManageBoardComponent', () => {
     componentRef = fixture.componentRef;
     boardService = TestBed.inject(BoardService) as jasmine.SpyObj<BoardService>;
     modalService = TestBed.inject(NgbModal) as jasmine.SpyObj<NgbModal>;
+    loaderService = TestBed.inject(LoaderService) as jasmine.SpyObj<LoaderService>;
   });
 
   it('should create', () => {
@@ -54,7 +67,7 @@ xdescribe('ManageBoardComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.custom-modal-title').textContent).toContain('Add New Board');
   });
-  
+
   it('should display "Create New Board" on the button when isNew is true', () => {
     spyOn(component, 'isNew').and.returnValue(true);
     fixture.detectChanges();
@@ -68,14 +81,14 @@ xdescribe('ManageBoardComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.custom-modal-title').textContent).toContain('Edit Board');
   });
-  
+
   it('should display "Save Changes" on the button when isNew is false', () => {
     spyOn(component, 'isNew').and.returnValue(false);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('app-custom-button[ng-reflect-mode="primary"]').textContent).toContain('Save Changes');
   });
-  
+
   it('should initialize form with board data if id is provided', () => {
     const board: Board = { id: 1, name: 'Test Board', columns: [{ name: 'To Do', color: '#fff', tasks: [] }, { name: 'Done', color: '#fff', tasks: [] }] };
     componentRef.setInput('id', 1);
@@ -84,11 +97,11 @@ xdescribe('ManageBoardComponent', () => {
 
     expect(component.name()).toBe('Test Board');
     expect(component.columns()).toEqual(board.columns);
-    
+
     expect(component.form.controls.boardName.value).toBe('Test Board');
     expect(component.getColumns.length).toBe(2);
   });
-  
+
   it('should initialize form with empty data if id is null', () => {
     componentRef.setInput('id', null);
     component.ngOnInit();
@@ -129,9 +142,15 @@ xdescribe('ManageBoardComponent', () => {
     component.form.controls.boardName.setValue('Test Board');
     component.onAddNewColumn();
     (<FormGroup>component.getColumns[0]).controls['name'].setValue('Test Status');
+
+    boardService.saveBoard.and.returnValue(of({}));
+    boardService.setBoardFullData.and.returnValue(of({}));
     component.onSave();
 
+    expect(loaderService.start).toHaveBeenCalled();
     expect(boardService.saveBoard).toHaveBeenCalled();
+    expect(boardService.setBoardFullData).toHaveBeenCalled();
     expect(modalService.dismissAll).toHaveBeenCalled();
+    expect(loaderService.stop).toHaveBeenCalled();
   });
 });

@@ -71,7 +71,7 @@ export class ManageBoardComponent implements OnInit {
       return;
     }
 
-    this.loaderService.start();
+    this.loaderService.start();    
     this.boardService.saveBoard(this.id(), this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []).pipe(
       switchMap(() => this.boardService.setBoardFullData())
     ).subscribe({
