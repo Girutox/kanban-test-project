@@ -10,25 +10,33 @@ import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component
 import { ComponentRef } from '@angular/core';
 import {worker} from '../../../mocks/browser'
 import { HttpClientModule } from '@angular/common/http';
+import { of } from 'rxjs';
+import { LoaderService } from '../../loader.service';
 
-xdescribe('ManageTaskComponent', () => {
+describe('ManageTaskComponent', () => {
   let component: ManageTaskComponent;
   let componentRef: ComponentRef<ManageTaskComponent>;
   let fixture: ComponentFixture<ManageTaskComponent>;
   let boardService: jasmine.SpyObj<BoardService>;
   let modalService: jasmine.SpyObj<NgbModal>;
+  let loaderService: jasmine.SpyObj<LoaderService>;
 
-  // beforeAll(async () => {
-  //   return worker.start({
-  //     onUnhandledRequest: 'bypass'
-  //   })
-  // })
+  beforeAll(async () => {
+    return worker.start({
+      onUnhandledRequest: 'bypass'
+    })
+  })
 
   beforeEach(async () => {
-    worker.start();
-
-    const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoardColumns', 'activeBoardId', 'saveTask']);
+    // const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoardColumns', 'activeBoardId', 'saveTask']);
+    const boardServiceSpy = jasmine.createSpyObj('BoardService', {
+      getBoardColumns: jasmine.createSpy('getBoardColumns'),
+      activeBoardId: jasmine.createSpy('activeBoardId'),
+      saveTask: jasmine.createSpy('saveTask').and.returnValue(of({})),
+      setBoardFullData: jasmine.createSpy('setBoardFullData').and.returnValue(of({}))
+    });
     const modalServiceSpy = jasmine.createSpyObj('NgbModal', ['dismissAll']);
+    const loaderServiceSpy = jasmine.createSpyObj('LoaderService', ['start', 'stop']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -42,12 +50,14 @@ xdescribe('ManageTaskComponent', () => {
       ],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
-        { provide: NgbModal, useValue: modalServiceSpy }
+        { provide: NgbModal, useValue: modalServiceSpy },
+        { provide: LoaderService, useValue: loaderServiceSpy }
       ]
     }).compileComponents();
 
     boardService = TestBed.inject(BoardService) as jasmine.SpyObj<BoardService>;
     modalService = TestBed.inject(NgbModal) as jasmine.SpyObj<NgbModal>;
+    loaderService = TestBed.inject(LoaderService) as jasmine.SpyObj<LoaderService>;
   });
 
   beforeEach(async () => {
@@ -89,9 +99,15 @@ xdescribe('ManageTaskComponent', () => {
   });
 
   it('should save the task', () => {
+    boardService.saveTask.and.returnValue(of({}));
+    boardService.setBoardFullData.and.returnValue(of({}));
     component.onSave();
+
+    expect(loaderService.start).toHaveBeenCalled();
     expect(boardService.saveTask).toHaveBeenCalled();
     expect(modalService.dismissAll).toHaveBeenCalled();
+    expect(boardService.setBoardFullData).toHaveBeenCalled();
+    expect(loaderService.stop).toHaveBeenCalled();
   });
 
   it('should display "Add New Task" when isNew is true', () => {
