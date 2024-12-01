@@ -22,10 +22,10 @@ describe('ManageTaskComponent', () => {
   let loaderService: jasmine.SpyObj<LoaderService>;
 
   beforeAll(async () => {
-    return worker.start({
+    await worker.start({
       onUnhandledRequest: 'bypass'
-    })
-  })
+    });
+  });
 
   beforeEach(async () => {
     const boardServiceSpy = jasmine.createSpyObj('BoardService', {

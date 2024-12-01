@@ -21,11 +21,13 @@ describe('ManageBoardComponent', () => {
   let modalService: jasmine.SpyObj<NgbModal>;
   let loaderService: jasmine.SpyObj<LoaderService>;
 
-  beforeEach(async () => {
-    worker.start({
+  beforeAll(async () => {
+    await worker.start({
       onUnhandledRequest: 'bypass'
     });
+  });
 
+  beforeEach(async () => {
     const boardServiceSpy = jasmine.createSpyObj('BoardService', {
       getBoard: jasmine.createSpy('getBoard'),
       saveBoard: jasmine.createSpy('saveBoard').and.returnValue(of({})),

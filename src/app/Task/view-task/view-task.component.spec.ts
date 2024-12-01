@@ -23,8 +23,8 @@ describe('ViewTaskComponent', () => {
   let modalServiceMock: any;
   let loaderService: jasmine.SpyObj<LoaderService>;
 
-  beforeAll(() => {
-    worker.start({
+  beforeAll(async () => {
+    await worker.start({
       onUnhandledRequest: 'bypass'
     });
   });

@@ -12,7 +12,7 @@ export class BoardService {
   router = inject(Router);
   http = inject(HttpClient);
 
-  private boards = signal<Board[]>([]);
+  boards = signal<Board[]>([]);
   private dummyBoards = signal<Board[]>([
     {
       "id": 1,
@@ -176,7 +176,7 @@ export class BoardService {
       ]
     }
   ]);
-  private fireBaseBoardUID = '';
+  fireBaseBoardUID = '';
   allBoards = this.boards.asReadonly();
 
   activeBoardId = signal<number | null>(null);
@@ -217,7 +217,7 @@ export class BoardService {
    * Allows to obtain the complete board based on the provided ID
    * @param id - The ID of the board to retrieve.
    */
-  getBoard(id: number) {
+  getBoard(id: number) {    
     return { ...this.boards().find(a => a.id == id)! };
   }
 
@@ -356,7 +356,7 @@ export class BoardService {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
     const board = { ...this.boards()[boardIndex] };
     this.boards().splice(boardIndex, 1);
-    board.columns = [...board.columns];
+    board.columns = [...board.columns];    
 
     const activeBoardColumn = board.columns.find(a => a.name == columnName);
     const taskIndex = activeBoardColumn?.tasks.findIndex(b => b.id == id)!;
@@ -391,7 +391,7 @@ export class BoardService {
         status,
       };
       targetColumn.tasks.push(task);
-    }
+    }   
 
     return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
   }
