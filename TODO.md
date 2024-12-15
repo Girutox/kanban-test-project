@@ -22,6 +22,7 @@
 - [] Add CROSS icon for modals (?)
 
 - [x] Add tests for all components.
+- [] Add active deployment script to Github Pages.
 
 ## Known Bugs
 
