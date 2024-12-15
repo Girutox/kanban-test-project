@@ -292,6 +292,7 @@ describe('BoardService', () => {
   });
 
   it('should delete a task', async () => {
+    service.setActiveBoardId(2);    
     const promise = lastValueFrom(service.deleteTask('Todo', 1));
     await awaitPromise(promise);
 
