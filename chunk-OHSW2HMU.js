@@ -1,0 +1,1 @@
+var e={production:!0,firebaseConfig:{apiKey:"AIzaSyCKwq1bNAuEjnjni9f91iqSXo2A_1D8OiY",authDomain:"https://kanban-demo-5b999-default-rtdb.firebaseio.com",projectId:"kanban-demo-5b999",appId:"112362479535"}};export{e as a};
