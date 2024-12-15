@@ -59,8 +59,8 @@ By following these steps, you can securely manage your environment variables wit
 ## Usage
 1. Create a new board and add columns (e.g., To Do, In Progress, Done).
 2. Add tasks to the columns and assign them to team members.
-3. Drag and drop tasks to move them between columns as work progresses.
-4. Use filters and search to find specific tasks quickly.
+3. Drag and drop tasks to move them between columns as work progresses (coming soon).
+4. Use filters and search to find specific tasks quickly (coming soon).
 
 ## Contributing
 We welcome contributions to the Kanban App! To contribute, please follow these steps:
