@@ -33,8 +33,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "baseHref": "https://girutox.github.io/kanban-test-project/"
+            "scripts": []
           },
           "configurations": {
             "production": {
