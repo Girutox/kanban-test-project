@@ -28,6 +28,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Create environment file
+      run: npm run config
+
     - name: Run tests
       run: npm run test
 
