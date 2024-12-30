@@ -224,7 +224,7 @@ describe('BoardService', () => {
   });
 
   it('should be created', () => {
-    expect(service).toBeFalsy();
+    expect(service).toBeTruthy();
   });
 
   it('should get board columns', () => {
