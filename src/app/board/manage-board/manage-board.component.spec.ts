@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageBoardComponent } from './manage-board.component';
 import { BoardService } from '../../board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomButtonComponent } from '../../UI/custom-button/custom-button.component';
 import { IconCrossComponent } from "../../UI/SVG/icon-cross/icon-cross.component";
@@ -10,8 +10,7 @@ import { ComponentRef } from '@angular/core';
 import { Board } from '../../model/board.model';
 import { worker } from '../../../mocks/browser'
 import { LoaderService } from '../../loader.service';
-import { of, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 describe('ManageBoardComponent', () => {
   let component: ManageBoardComponent;
@@ -143,7 +142,7 @@ describe('ManageBoardComponent', () => {
   it('should save the board if the form is valid', () => {
     component.form.controls.boardName.setValue('Test Board');
     component.onAddNewColumn();
-    (<FormGroup>component.getColumns[0]).controls['name'].setValue('Test Status');
+    (component.getColumns[0] as FormGroup).controls['name'].setValue('Test Status');
 
     boardService.saveBoard.and.returnValue(of({}));
     boardService.setBoardFullData.and.returnValue(of({}));

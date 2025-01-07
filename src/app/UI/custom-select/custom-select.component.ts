@@ -1,4 +1,4 @@
-import { Component, input, output, ViewEncapsulation } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconChevronDownComponent } from "../SVG/icon-chevron-down/icon-chevron-down.component";
 
@@ -14,9 +14,9 @@ export class CustomSelectComponent {
   options = input.required<{value: string, display: string}[]>();
   customFormControlName = input.required<string>();
 
-  change = output<void>();
+  customChange = output<void>();
 
   onChange() {
-    this.change.emit();
+    this.customChange.emit();
   }
 }

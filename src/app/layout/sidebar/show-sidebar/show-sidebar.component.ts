@@ -1,4 +1,4 @@
-import { Component, output, ViewEncapsulation } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { CustomButtonComponent } from "../../../UI/custom-button/custom-button.component";
 import { IconShowSidebarComponent } from '../../../UI/SVG/icon-show-sidebar/icon-show-sidebar.component';
 

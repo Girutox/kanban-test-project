@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HeaderComponent } from "./layout/header/header.component";
@@ -14,7 +14,7 @@ import { LoaderService } from './loader.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   screenSizeService = inject(ScreenSizeService);
   boardService = inject(BoardService);
   loaderService = inject(LoaderService);
@@ -29,10 +29,10 @@ export class AppComponent {
 
     this.loaderService.start();
     this.boardService.setBoardFullData().subscribe({
-      next: (response) => {
+      next: () => {
         this.loaderService.stop();
       },
-      error: (error) => {
+      error: () => {
         this.loaderService.stop();
       }
     });

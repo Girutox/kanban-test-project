@@ -95,12 +95,12 @@ export class HeaderComponent implements OnInit {
       this.boardService.deleteActiveBoard().pipe(
         switchMap(() => this.boardService.setBoardFullData())
       ).subscribe({
-        next: (response) => {          
+        next: () => {          
           this.boardService.activeBoardId.set(null);
           this.router.navigate(['/']);
           this.loaderService.stop();
         },
-        error: (err) => {
+        error: () => {
           this.loaderService.stop();
         }
       });

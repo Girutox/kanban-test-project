@@ -7,8 +7,6 @@ export class LoaderService {
   private isLoading = signal(false);
   isLoading$ = this.isLoading.asReadonly();
 
-  constructor() { }
-
   start() {
     this.isLoading.set(true);
   }

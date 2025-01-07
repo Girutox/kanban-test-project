@@ -38,7 +38,7 @@
     </div>
     <div class="form-group">
       <label for="currentStatus">Current Status</label>
-      <app-custom-select [options]="getStatusOptions()" [form]="form" customFormControlName="status" (change)="onControlChange()" />
+      <app-custom-select [options]="getStatusOptions()" [form]="form" customFormControlName="status" (customChange)="onControlChange()" />
     </div>
   </form>
 </div>

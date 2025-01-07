@@ -13,11 +13,11 @@
     </textarea>
     </div>
     <div class="form-group">
-      <label>Subtasks (*)</label>
+      <label for="subtasks">Subtasks (*)</label>
       @if (form.controls.subtasks.controls.length == 0) {
         <p>Start adding subtasks! 👇</p>
       } @else {
-      <div formArrayName="subtasks" class="subtask-list">
+      <div id="subtasks" formArrayName="subtasks" class="subtask-list">
         <div class="subtask-section" *ngFor="let subtask of getSubtasksControls; let i = index" [formGroupName]="i">
           <input type="text" class="form-control" formControlName="title" placeholder="(*) Title is required">
           <button (click)="onRemoveSubtask(i)">

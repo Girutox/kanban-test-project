@@ -26,7 +26,7 @@ export class BoardComponent implements OnInit {
 
   boardId = signal<number>(0);
   boardColumns = computed<Column[]>(() => {    
-    return <Column[]>JSON.parse(JSON.stringify(this.boardService.getBoardColumns(this.boardId())));
+    return JSON.parse(JSON.stringify(this.boardService.getBoardColumns(this.boardId()))) as Column[];
   });
   isSpecial = computed<boolean>(() => this.boardColumns().length > 0);
 

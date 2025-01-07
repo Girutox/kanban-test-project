@@ -9,7 +9,7 @@
 }
 <section class="title-section">
   <div class="title-search-group">
-    @if (boardName() == '') {
+    @if (boardName() === '') {
     <h1 class="choose-board-mobile">{{ isMobileMediumSize() ? '[Choose a board]' : ''}}</h1>
     } @else {
     <h1>{{boardName()}}</h1>

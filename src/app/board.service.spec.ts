@@ -2,19 +2,19 @@ import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { BoardService } from './board.service';
 import { Board, Column, Subtask } from './model/board.model';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { worker } from '../mocks/browser';
 import { signal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 
 describe('BoardService', () => {
   let service: BoardService;
-  let routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   let fireBaseBoardUID = '1';
 
   function awaitPromise(promise: Promise<object>) {
     return promise.then(res => {
-      const response: { [key: string]: Board[] } = res as { [key: string]: Board[] };
+      const response: Record<string, Board[]> = res as Record<string, Board[]>;
       if (response) {
         fireBaseBoardUID = Object.keys(response)[0];
         const boards = response[fireBaseBoardUID];

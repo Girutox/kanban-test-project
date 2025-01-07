@@ -51,7 +51,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.task().subtasks.forEach(a => {
-      (<FormArray>this.form.get('subtasks')).push(new FormGroup({
+      (this.form.get('subtasks') as FormArray).push(new FormGroup({
         title: new FormControl(a.title, Validators.required),
         isCompleted: new FormControl(a.isCompleted, Validators.required)
       }));
@@ -103,7 +103,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
         next: () => {
           this.loaderService.stop();
         },
-        error: (err) => {
+        error: () => {
           this.loaderService.stop();
         }
       }
@@ -114,13 +114,13 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.formChanged) {
       this.loaderService.start();
-      this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.controls.subtasks.value, this.form.controls.status.value ?? '').pipe(
+      this.boardService.saveTask(this.columnName() ?? '', this.task().id, (this.form.controls.subtasks.value as Subtask[]), this.form.controls.status.value ?? '').pipe(
         switchMap(() => this.boardService.setBoardFullData())
       ).subscribe({
         next: () => {
           this.loaderService.stop();
         },
-        error: (err) => {
+        error: () => {
           this.loaderService.stop();
         }
       });

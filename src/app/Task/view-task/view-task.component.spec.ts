@@ -21,7 +21,6 @@ describe('ViewTaskComponent', () => {
   let fixture: ComponentFixture<ViewTaskComponent>;
   let boardService: jasmine.SpyObj<BoardService>;
   let modalServiceMock: any;
-  let loaderService: jasmine.SpyObj<LoaderService>;
 
   beforeAll(async () => {
     await worker.start({
@@ -64,7 +63,6 @@ describe('ViewTaskComponent', () => {
     }).compileComponents();
 
     boardService = TestBed.inject(BoardService) as jasmine.SpyObj<BoardService>;
-    loaderService = TestBed.inject(LoaderService) as jasmine.SpyObj<LoaderService>;
   });
 
   beforeEach(() => {

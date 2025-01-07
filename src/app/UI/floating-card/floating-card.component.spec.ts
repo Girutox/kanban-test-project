@@ -5,7 +5,6 @@ import { FloatingCardComponent } from './floating-card.component';
 describe('FloatingCardComponent', () => {
   let component: FloatingCardComponent;
   let fixture: ComponentFixture<FloatingCardComponent>;
-  let renderer2: Renderer2;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +14,6 @@ describe('FloatingCardComponent', () => {
 
     fixture = TestBed.createComponent(FloatingCardComponent);
     component = fixture.componentInstance;
-    renderer2 = TestBed.inject(Renderer2);
     fixture.detectChanges();
   });
 

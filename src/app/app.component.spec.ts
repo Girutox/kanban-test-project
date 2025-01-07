@@ -50,7 +50,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     app.ngOnInit();
 
-    const subs = screenSizeService.resized$.subscribe(sizes => {
+    const subs = screenSizeService.resized$.subscribe(() => {
       expect(app.isMobileMediumSize()).toBeTrue();
       done();
     });
@@ -64,7 +64,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     app.ngOnInit();
 
-    const subs = screenSizeService.resized$.subscribe(sizes => {
+    const subs = screenSizeService.resized$.subscribe(() => {
       expect(app.isMobileMediumSize()).toBeFalse();
       done();
     });

@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { BoardService } from '../../board.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SubtaskForm } from '../view-task/view-task.component';
@@ -18,7 +18,7 @@ import { switchMap } from 'rxjs';
   templateUrl: './manage-task.component.html',
   styleUrl: './manage-task.component.scss'
 })
-export class ManageTaskComponent {
+export class ManageTaskComponent implements OnInit {
   boardService = inject(BoardService);
   modalService = inject(NgbModal);
   loaderService = inject(LoaderService);
@@ -42,7 +42,7 @@ export class ManageTaskComponent {
     this.form.controls.title.setValue(this.task().title);
     this.form.controls.description.setValue(this.task().description);
     this.task().subtasks.forEach(a => {
-      (<FormArray>this.form.get('subtasks')).push(new FormGroup({
+      (this.form.get('subtasks') as FormArray).push(new FormGroup({
         title: new FormControl(a.title, Validators.required),
         isCompleted: new FormControl(a.isCompleted, Validators.required)
       }));
@@ -56,7 +56,7 @@ export class ManageTaskComponent {
   }
 
   onAddNewSubtask() {
-    (<FormArray>this.form.get('subtasks')).push(
+    (this.form.get('subtasks') as FormArray).push(
       new FormGroup({
         title: new FormControl('', [Validators.required]),
         isCompleted: new FormControl(false)
@@ -65,7 +65,7 @@ export class ManageTaskComponent {
   }
 
   onRemoveSubtask(index: number) {
-    (<FormArray>this.form.get('subtasks')).removeAt(index);
+    (this.form.get('subtasks') as FormArray).removeAt(index);
   }
 
   onSave() {
@@ -74,14 +74,14 @@ export class ManageTaskComponent {
     }    
 
     this.loaderService.start();
-    this.boardService.saveTask(this.columnName() ?? '', this.task().id, <Subtask[]>this.form.value.subtasks, this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '').pipe(
+    this.boardService.saveTask(this.columnName() ?? '', this.task().id, (this.form.value.subtasks as Subtask[]), this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '').pipe(
       switchMap(() => this.boardService.setBoardFullData())
     ).subscribe({
       next: () => {        
         this.modalService.dismissAll();
         this.loaderService.stop();
       },
-      error: (err) => {
+      error: () => {
         this.modalService.dismissAll();
         this.loaderService.stop();
       }

@@ -269,7 +269,7 @@ export class BoardService {
   //#endregion
 
   setBoardFullData() {
-    return this.http.get<{ [key: string]: Board[] }>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
+    return this.http.get<Record<string, Board[]>>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
       tap((response) => {        
         if (response) {
           this.fireBaseBoardUID = Object.keys(response)[0];          
@@ -352,7 +352,7 @@ export class BoardService {
    * @param title - The title of the task (optional).
    * @param description - The description of the task (optional).
    */
-  saveTask(columnName: string, id: number, subtasks: Subtask[], status: string, title: string = '', description: string = '') {
+  saveTask(columnName: string, id: number, subtasks: Subtask[], status: string, title = '', description = '') {
     const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
     const board = { ...this.boards()[boardIndex] };
     this.boards().splice(boardIndex, 1);

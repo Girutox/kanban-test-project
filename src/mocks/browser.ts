@@ -3,7 +3,7 @@ import { setupWorker } from 'msw/browser'
 import { environment } from '../environments/environment'
 import { Board } from '../app/model/board.model';
 
-let dummyBoards: { [key: string]: Board[] } = {
+let dummyBoards: Record<string, Board[]> = {
   ["-OCiVFLHoccVfZtGPtaO"]: [
     {
       "id": 2,
@@ -178,7 +178,7 @@ export const mocks = [
     const url = new URL(request.url);
     const key = url.searchParams.get('key');
 
-    const payload = await request.json() as { [key: string]: Board[] };
+    const payload = await request.json() as Record<string, Board[]>;
     dummyBoards = payload;
     if (key === environment.firebaseConfig.apiKey) {
       return HttpResponse.json(payload);
@@ -189,7 +189,7 @@ export const mocks = [
     const url = new URL(request.url);
     const key = url.searchParams.get('key');
 
-    const payload = await request.json() as { [key: string]: Board[] };
+    const payload = await request.json() as Record<string, Board[]>;
     dummyBoards = payload;
     if (key === environment.firebaseConfig.apiKey) {
       return HttpResponse.json(payload);

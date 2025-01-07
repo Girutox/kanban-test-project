@@ -1,4 +1,4 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { BoardListComponent } from './board-list/board-list.component';

@@ -10,11 +10,9 @@ import { ManageBoardComponent } from '../../board/manage-board/manage-board.comp
 import { ConfirmationModalComponent } from '../../UI/confirmation-modal/confirmation-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentRef } from '@angular/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
-  let componentRef: ComponentRef<HeaderComponent>;
   let fixture: ComponentFixture<HeaderComponent>;
   let boardServiceMock: any;
   let screenSizeServiceMock: any;
@@ -60,7 +58,6 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
     fixture.detectChanges();
   });
 

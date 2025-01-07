@@ -46,7 +46,7 @@ export class ManageBoardComponent implements OnInit {
 
     this.form.controls.boardName.setValue(this.name());
     for (const column of this.columns()) {
-      (<FormArray>this.form.get('columns')).push(
+      (this.form.get('columns') as FormArray).push(
         new FormGroup({
           name: new FormControl(column.name, [Validators.required])
         })
@@ -55,7 +55,7 @@ export class ManageBoardComponent implements OnInit {
   }
 
   onAddNewColumn() {
-    (<FormArray>this.form.get('columns')).push(
+    (this.form.get('columns') as FormArray).push(
       new FormGroup({
         name: new FormControl('', [Validators.required])
       })
@@ -75,11 +75,11 @@ export class ManageBoardComponent implements OnInit {
     this.boardService.saveBoard(this.id(), this.form.controls.boardName.value ?? '', this.form.get('columns')?.value ?? []).pipe(
       switchMap(() => this.boardService.setBoardFullData())
     ).subscribe({
-      next: (response) => {        
+      next: () => {        
         this.modalService.dismissAll();
         this.loaderService.stop();
       },
-      error: (err) => {
+      error: () => {
         this.modalService.dismissAll();
         this.loaderService.stop();
       }
