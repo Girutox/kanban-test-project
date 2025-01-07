@@ -35,12 +35,12 @@ describe('CustomSelectComponent', () => {
   });
 
   it('should emit change event on selection change', () => {
-    spyOn(component.change, 'emit');
+    spyOn(component.customChange, 'emit');
     
     const selectElement = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
     selectElement.dispatchEvent(new Event('change'));
 
-    expect(component.change.emit).toHaveBeenCalled();
+    expect(component.customChange.emit).toHaveBeenCalled();
   });
 
   it('should populate the select element with options', () => {
