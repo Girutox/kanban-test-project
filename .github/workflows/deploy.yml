@@ -31,6 +31,9 @@ jobs:
     - name: Create environment file
       run: npm run config
 
+    - name: Run ESlint
+      run: npm run lint
+
     - name: Run tests
       run: npm run test -- --watch=false --browsers=ChromeHeadless
 
