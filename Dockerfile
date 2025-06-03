@@ -1,5 +1,5 @@
 # Stage 1: Build Angular app
-FROM node:18-alpine as builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 
 # Build Angular app for production with base href
-RUN npm run build -- --base-href /kanban-test-project/ --configuration=production
+RUN npm run build -- --configuration=production
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
