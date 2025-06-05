@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 
 # Build Angular app for production with base href
-RUN npm run build -- --base-href /kanban-test-project/ --configuration=production
+RUN npm run build -- --base-href /kanban-test-project/ --configuration=development
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine

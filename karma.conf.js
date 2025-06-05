@@ -4,14 +4,14 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    files: [
-      // Include the MSW script
-      { pattern: './src/mockServiceWorker.js', watched: false },
-      // Your other test files
-    ],
-    proxies: {
-      '/mockServiceWorker.js': '/base/src/mockServiceWorker.js'
-    },
+    // files: [
+    //   // Include the MSW script
+    //   { pattern: './src/mockServiceWorker.js', watched: false },
+    //   // Your other test files
+    // ],
+    // proxies: {
+    //   '/mockServiceWorker.js': '/base/src/mockServiceWorker.js'
+    // },
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
