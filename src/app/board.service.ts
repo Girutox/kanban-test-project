@@ -269,11 +269,10 @@ export class BoardService {
   //#endregion
 
   setBoardFullData() {
-    return this.http.get<Record<string, Board[]>>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
+    return this.http.get<Board[]>(`http://localhost:5000/api/boards`).pipe(
       tap((response) => {        
         if (response) {
-          this.fireBaseBoardUID = Object.keys(response)[0];          
-          const boards = response[this.fireBaseBoardUID];
+          const boards = response;
           boards.map((board) => {
             if (!board.hasOwnProperty('columns')) {
               board.columns = [];
@@ -297,6 +296,34 @@ export class BoardService {
         }        
       })
     );
+    // return this.http.get<Record<string, Board[]>>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
+    //   tap((response) => {        
+    //     if (response) {
+    //       this.fireBaseBoardUID = Object.keys(response)[0];          
+    //       const boards = response[this.fireBaseBoardUID];
+    //       boards.map((board) => {
+    //         if (!board.hasOwnProperty('columns')) {
+    //           board.columns = [];
+    //         } else {
+    //           board.columns.map((column) => {
+    //             if (!column.hasOwnProperty('tasks')) {
+    //               column.tasks = [];
+    //             } else {
+    //               column.tasks.map((task) => {
+    //                 if (!task.hasOwnProperty('subtasks')) {
+    //                   task.subtasks = [];
+    //                 }
+    //               });
+    //             }
+    //           });
+    //         }
+    //       });
+    //       this.boards.set(boards);
+    //     } else {
+    //       this.boards.set([]);
+    //     }        
+    //   })
+    // );
   }
 
   /**
