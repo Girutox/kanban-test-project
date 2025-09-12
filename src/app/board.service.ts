@@ -13,190 +13,17 @@ export class BoardService {
   http = inject(HttpClient);
 
   boards = signal<Board[]>([]);
-  private dummyBoards = signal<Board[]>([
-    {
-      "id": 1,
-      "name": "Platform Launch",
-      "columns": []
-    },
-    {
-      "id": 2,
-      "name": "Marketing Plan",
-      "columns": [
-        {
-          "name": "Todo",
-          "color": "#ff5733",
-          "tasks": [
-            {
-              "id": 1,
-              "title": "Plan Product Hunt launch",
-              "description": "We're planning to launch on Product Hunt in 2 weeks. We need to get everything ready for the launch, including the product page, assets, and network notifications.",
-              "status": "Todo",
-              "subtasks": [
-                {
-                  "title": "Find hunter",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Gather assets",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Draft product page",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Notify customers",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Notify network",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Launch!",
-                  "isCompleted": false
-                }
-              ]
-            },
-            {
-              "id": 2,
-              "title": "Share on Show HN",
-              "description": "We're planning to share our product on Show HN to get feedback from the community. We need to draft out the post, get feedback, and publish the post.",
-              "status": "Todo",
-              "subtasks": [
-                {
-                  "title": "Draft out HN post",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Get feedback and refine",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Publish post",
-                  "isCompleted": false
-                }
-              ]
-            },
-            {
-              "id": 3,
-              "title": "Write launch article to publish on multiple channels",
-              "description": "We're planning to write an article about our launch and publish it on multiple channels to get the word out. We need to draft the article and publish it on LinkedIn, Indie Hackers, and Medium.",
-              "status": "Todo",
-              "subtasks": [
-                {
-                  "title": "Write article",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Publish on LinkedIn",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Publish on Inndie Hackers",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Publish on Medium",
-                  "isCompleted": false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Doing",
-          "color": "#d5e723",
-          "tasks": []
-        },
-        {
-          "name": "Done",
-          "color": "#2367e7",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Roadmap",
-      "columns": [
-        {
-          "name": "Now",
-          "color": "#e72382",
-          "tasks": [
-            {
-              "id": 4,
-              "title": "Launch version one",
-              "description": "We're planning to launch version one of our product in 2 weeks. We need to get everything ready for the launch, including the product page, assets, and network notifications.",
-              "status": "Now",
-              "subtasks": [
-                {
-                  "title": "Launch privately to our waitlist",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Launch publicly on PH, HN, etc.",
-                  "isCompleted": false
-                }
-              ]
-            },
-            {
-              "id": 5,
-              "title": "Review early feedback and plan next steps for roadmap",
-              "description": "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
-              "status": "Now",
-              "subtasks": [
-                {
-                  "title": "Interview 10 customers",
-                  "isCompleted": true
-                },
-                {
-                  "title": "Review common customer pain points and suggestions",
-                  "isCompleted": false
-                },
-                {
-                  "title": "Outline next steps for our roadmap",
-                  "isCompleted": false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Next",
-          "color": "#23e7e1",
-          "tasks": []
-        },
-        {
-          "name": "Later",
-          "color": "#23e729",
-          "tasks": []
-        }
-      ]
-    }
-  ]);
-  fireBaseBoardUID = '';
   allBoards = this.boards.asReadonly();
 
   activeBoardId = signal<number | null>(null);
+
+  fireBaseBoardUID = "";
 
   constructor() {
     const activeBoardId = window.localStorage.getItem('activeBoardId');
     if (activeBoardId) {
       this.setActiveBoardId(parseInt(activeBoardId));
     }
-  }
-
-  testFireBase() {
-    this.http.post(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, this.dummyBoards()).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
   }
 
   //#region Board Management (local)
@@ -269,7 +96,7 @@ export class BoardService {
   //#endregion
 
   setBoardFullData() {
-    return this.http.get<Board[]>(`http://localhost:5000/api/boards`).pipe(
+    return this.http.get<Board[]>(`${environment.apiBaseUrl}/boards`).pipe(
       tap((response) => {        
         if (response) {
           const boards = response;
@@ -296,34 +123,6 @@ export class BoardService {
         }        
       })
     );
-    // return this.http.get<Record<string, Board[]>>(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`).pipe(
-    //   tap((response) => {        
-    //     if (response) {
-    //       this.fireBaseBoardUID = Object.keys(response)[0];          
-    //       const boards = response[this.fireBaseBoardUID];
-    //       boards.map((board) => {
-    //         if (!board.hasOwnProperty('columns')) {
-    //           board.columns = [];
-    //         } else {
-    //           board.columns.map((column) => {
-    //             if (!column.hasOwnProperty('tasks')) {
-    //               column.tasks = [];
-    //             } else {
-    //               column.tasks.map((task) => {
-    //                 if (!task.hasOwnProperty('subtasks')) {
-    //                   task.subtasks = [];
-    //                 }
-    //               });
-    //             }
-    //           });
-    //         }
-    //       });
-    //       this.boards.set(boards);
-    //     } else {
-    //       this.boards.set([]);
-    //     }        
-    //   })
-    // );
   }
 
   /**
@@ -342,9 +141,8 @@ export class BoardService {
       this.boards().splice(boardIndex, 1);
       board.name = name;
     } else {
-      const newBoardId = this.boards().length > 0 ? Math.max(...this.boards().map(a => a.id)) + 1 : 1; // If no boards, start with ID 1
       board = {
-        id: newBoardId,
+        id: null,
         name: name,
         columns: []
       };
@@ -359,11 +157,7 @@ export class BoardService {
     }
     board.columns = columns;
 
-    if (this.fireBaseBoardUID == '') {
-      return this.http.post(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, [...this.boards(), board]);
-    } else {
-      return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
-    }
+    return this.http.post(`${environment.apiBaseUrl}/boards/save`, board);
   }
 
   /**
@@ -393,8 +187,9 @@ export class BoardService {
       if (columnName == status) {
         task.title = title == '' ? task.title : title;
         task.description = description == '' ? task.description : description;
-        task.subtasks = subtasks;
         task.status = status;
+        task.columnId = activeBoardColumn!.id;
+        task.subtasks = subtasks;
       } else {
         const targetColumn = board.columns.find(a => a.name == status)!;
         activeBoardColumn!.tasks.splice(taskIndex, 1);
@@ -403,24 +198,33 @@ export class BoardService {
           ...task,
           title: title == '' ? task.title : title,
           description: description == '' ? task.description : description,
-          subtasks: subtasks,
-          status: status
+          status: status,
+          columnId: targetColumn.id,
+          subtasks: subtasks
         });
+        task = {
+          ...task,
+          title: title == '' ? task.title : title,
+          description: description == '' ? task.description : description,
+          status: status,
+          columnId: targetColumn.id,
+          subtasks: subtasks
+        }
       }
     } else {
       const targetColumn = board.columns.find(a => a.name == status)!;
-      const newTaskId = targetColumn.tasks.length > 0 ? Math.max(...targetColumn.tasks.map(a => a.id)) + 1 : 1; // If no tasks, start with ID 1
       task = {
-        id: newTaskId, // TO DO: Get max ID from all columns (TEMP until DB connection)
+        id: null,
         title,
         description,
-        subtasks,
         status,
+        columnId: targetColumn.id,
+        subtasks,
       };
       targetColumn.tasks.push(task);
-    }   
+    }
 
-    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
+    return this.http.post(`${environment.apiBaseUrl}/tasks/save`, task);
   }
 
   /**
@@ -456,6 +260,6 @@ export class BoardService {
     const taskIndex = activeBoardColumn.tasks.findIndex(b => b.id == id)!;
     activeBoardColumn.tasks.splice(taskIndex, 1);
 
-    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: [...this.boards(), board] });
+    return this.http.post(`${environment.apiBaseUrl}/boards/save`, board);
   }
 }

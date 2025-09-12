@@ -74,7 +74,7 @@ export class ManageTaskComponent implements OnInit {
     }    
 
     this.loaderService.start();
-    this.boardService.saveTask(this.columnName() ?? '', this.task().id, (this.form.value.subtasks as Subtask[]), this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '').pipe(
+    this.boardService.saveTask(this.columnName() ?? '', this.task().id!, (this.form.value.subtasks as Subtask[]), this.form.value.status ?? '', this.form.value.title ?? '', this.form.value.description ?? '').pipe(
       switchMap(() => this.boardService.setBoardFullData())
     ).subscribe({
       next: () => {        

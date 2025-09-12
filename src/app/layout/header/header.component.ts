@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
   onAddNewTask() {
     const modalRef = this.modalService.open(ManageTaskComponent, { centered: true });
     modalRef.componentInstance.isNew = signal(true);
-    modalRef.componentInstance.task = signal<Task>({ id: 0, title: '', description: '', subtasks: [], status: '' });
+    modalRef.componentInstance.task = signal<Task>({ id: 0, title: '', description: '', status: '', columnId: 0, subtasks: [] });
   }
 
   onEditBoard() {
@@ -127,6 +127,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onTestFirebase() {
-    this.boardService.testFireBase();
+    // this.boardService.testFireBase();
   }
 }

@@ -97,7 +97,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.data = signal(this.task().title);
     modalRef.componentInstance.confirmedAction = signal(() => {
       this.loaderService.start();
-      this.boardService.deleteTask(this.columnName() ?? '', this.task().id).pipe(
+      this.boardService.deleteTask(this.columnName() ?? '', this.task().id!).pipe(
         switchMap(() => this.boardService.setBoardFullData())
       ).subscribe({
         next: () => {
@@ -114,7 +114,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.formChanged) {
       this.loaderService.start();
-      this.boardService.saveTask(this.columnName() ?? '', this.task().id, (this.form.controls.subtasks.value as Subtask[]), this.form.controls.status.value ?? '').pipe(
+      this.boardService.saveTask(this.columnName() ?? '', this.task().id!, (this.form.controls.subtasks.value as Subtask[]), this.form.controls.status.value ?? '').pipe(
         switchMap(() => this.boardService.setBoardFullData())
       ).subscribe({
         next: () => {
