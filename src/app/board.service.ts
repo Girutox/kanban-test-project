@@ -233,12 +233,8 @@ export class BoardService {
    * This function finds the index of the currently active board in the list of boards,
    * removes it from the list, and then sets the active board ID to null.
    */
-  deleteActiveBoard() {
-    const boardIndex = this.boards().findIndex(a => a.id == this.activeBoardId());
-    const newBoard = [...this.boards()];
-    newBoard.splice(boardIndex, 1);
-    
-    return this.http.put(`${environment.firebaseConfig.authDomain}/boards/user1.json?key=${environment.firebaseConfig.apiKey}`, { [this.fireBaseBoardUID]: newBoard });
+  deleteActiveBoard() {    
+    return this.http.delete(`${environment.apiBaseUrl}/boards/delete/${this.activeBoardId()}`);
   }
 
   /**
